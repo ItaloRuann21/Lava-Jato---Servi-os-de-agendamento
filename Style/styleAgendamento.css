@@ -1,0 +1,64 @@
+.body{
+    background-image: url(../Assets/ServiceBanner.png);
+    background-size: 1366px 615px;
+}
+#Nav{
+    background-color: #000000;
+}
+#NavLink{
+    margin-left: 4%;
+}
+#Link{
+    color:white;
+}
+#imgLogo{
+    width: 20%;
+    margin-left: 2%;
+}
+#imgLogin{
+    width: 7%;
+    margin-left: 115%;
+}
+#Title1{
+    color: #ffffff;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    margin-left: 40%;
+    margin-bottom: 3%;
+}
+#Form{
+    background-color: #0f0f0f;
+    opacity: 95%;
+    margin-left: 10%;
+    border-radius: 2%;
+    margin-top: 0%;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+}
+#btn2{
+    margin-left: 70%;
+    margin-top: -7%;
+    margin-bottom: 3%;
+    background-color: #0052bd;
+    color: #ffffff;
+}
+#label{
+    margin-left: 10%;
+    width: 80%;
+    color: #ffffff;
+}
+#Form2{   
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    margin-right: 10%;
+    border: none;
+}
+#header{
+    background-color:  #0f0f0f;
+    opacity: 95%;
+    color: #ffffff;
+}
+#btn3{
+    margin-left: 0%;
+    margin-top: 3%;
+    width: 50%;
+    background-color: #0052bd;
+    color: #ffffff;
+}
