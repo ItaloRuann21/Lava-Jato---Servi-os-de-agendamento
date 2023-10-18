@@ -1,126 +1,130 @@
-#Nav{
-    background-color: #000000;
+#Nav {
+  background-color: #000000;
 }
-#NavLink{
-    margin-left: 4%;
+#NavLink {
+  margin-left: 4%;
 }
-#Link{
-    color:white;
+#Link {
+  color: white;
 }
-#imgLogo{
-    width: 20%;
-    margin-left: 2%;
+#imgLogo {
+  width: 20%;
+  margin-left: 2%;
 }
-#imgLogin{
-    width: 7%;
-    margin-left: 115%;
+#imgLogin {
+  width: 7%;
+  margin-left: 115%;
 }
-#Banner{
-    width: 100%;
-    margin: 0%;
-    position: absolute;
+#Banner {
+  width: 100%;
+  margin: 0%;
+  position: absolute;
 }
-#Nome{
-    margin-left: 31%;
-    margin-top: 5%;
-    position: relative;
+#Nome {
+  margin-left: 31%;
+  margin-top: 5%;
+  position: relative;
 }
-#imgLavaJato{
-    width: 40%;
-    margin-left: 7%;
-    border-radius: 2%;
-    position: absolute;
+#imgLavaJato {
+  width: 40%;
+  margin-left: 7%;
+  border-radius: 2%;
+  position: absolute;
 }
-#Title1{
-    color: #000000;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    margin-left: 55%;
+#Title1 {
+  color: #000000;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  margin-left: 55%;
 }
-#Conteudo{
-    margin-left: 55%;
-    margin-top: 1%;
-    font-size: 100%;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+#Conteudo {
+  margin-left: 55%;
+  margin-top: 1%;
+  font-size: 100%;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
-.Service{
-    margin-top: 17%;
+.Service {
+  margin-top: 17%;
 }
-#Title2{
-    margin-left: 38%;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    color: black;
+#Title2 {
+  margin-left: 38%;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  color: black;
 }
-#Col{
-    margin-left: 4%;
+#Col {
+  margin-left: 4%;
 }
-#card{
-    width: 20%;
-   margin-left: 0;
+#card {
+  width: 20%;
+  margin-left: 0;
 }
-#Btn{
-    margin-left: 65%;
-    background-color: #0052bd;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+#Btn-lavagemsimples {
+  margin-left: 65%;
+  background-color: #0052bd;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
-#LinkCard{
-    margin-left: 90%;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+#Btn {
+  margin-left: 65%;
+  background-color: #0052bd;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
-.Footer{
-    background-color: #000000;
+#LinkCard {
+  margin-left: 90%;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
-#card-Footer{
-    margin-left: 60%;
-     
+.Footer {
+  background-color: #000000;
 }
-#btnCard{
-    margin-left: 80%;
-    background-color: #0052bd;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+#card-Footer {
+  margin-left: 60%;
 }
-#Title3{
-    margin-left: 70%;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    color: white;
+#btnCard {
+  margin-left: 80%;
+  background-color: #0052bd;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
-#imgFooter{
-    width: 30%;
-    margin-top: -25%;
-    margin-left: 5%;
-    position: absolute;
+#Title3 {
+  margin-left: 70%;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  color: white;
 }
-.icon{
-    width: 5%;
-    margin-left: 11%;
+#imgFooter {
+  width: 30%;
+  margin-top: -25%;
+  margin-left: 5%;
+  position: absolute;
 }
-#iconTel{
-    margin-top: -50%;
+.icon {
+  width: 5%;
+  margin-left: 11%;
 }
-#iconEmail{
-    margin-top: 2%;
+#iconTel {
+  margin-top: -50%;
 }
-#iconInsta{
-    margin-top: 2.5%;
+#iconEmail {
+  margin-top: 2%;
 }
-#icons{
-    margin-top: -1%;
-    margin-left: 7%;
-    position: absolute;
+#iconInsta {
+  margin-top: 2.5%;
 }
-.textFooter{
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    margin-left: 15%;
-    color: #444444;
+#icons {
+  margin-top: -1%;
+  margin-left: 7%;
+  position: absolute;
 }
-#textTel{
-    margin-top: -29.5%;
-    margin-left: 19%;
+.textFooter {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  margin-left: 15%;
+  color: #444444;
 }
-#textEmail{
-    margin-top: -5%;
-    margin-left: 19%;
+#textTel {
+  margin-top: -29.5%;
+  margin-left: 19%;
 }
-#textInsta{
-    margin-top: -5%;
-    margin-left: 19%;
+#textEmail {
+  margin-top: -5%;
+  margin-left: 19%;
+}
+#textInsta {
+  margin-top: -5%;
+  margin-left: 19%;
 }
