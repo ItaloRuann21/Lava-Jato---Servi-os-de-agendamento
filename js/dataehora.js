@@ -2,10 +2,7 @@ const data = document.querySelector("#data");
 const hora = document.querySelector("#time");
 
 data.addEventListener("change", function (event) {
-  localStorage.setItem(
-    "lavajato-data",
-    new Intl.DateTimeFormat("pt-BR").format(new Date(event.target.value))
-  );
+  localStorage.setItem("lavajato-data", event.target.value);
 });
 
 hora.addEventListener("change", function (event) {
