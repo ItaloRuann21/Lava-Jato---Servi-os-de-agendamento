@@ -1,5 +1,5 @@
-const textServicoSimples = document.querySelector("#service");
+const textServicoSimples = document.querySelector("#header");
 
-textServicoSimples.innerHTML = `<b>Tipo</b>: ${localStorage.getItem(
+textServicoSimples.innerHTML = `${localStorage.getItem(
   "servicosimples.title"
 )}`;
