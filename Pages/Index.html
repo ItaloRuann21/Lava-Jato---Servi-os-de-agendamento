@@ -136,22 +136,25 @@
   <footer class="Footer">
 
     <br>
-    <a href="" name="faleconosco"></a>
-    <h2 id="Title3">Fale Conosco</h2>
-    <br>
-    <div class="card" style="width: 30rem;" id="card-Footer">
-      <div class="card-body">
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Email</label>
-          <input type="email" class="form-control" id="Input" placeholder="seuemail@gmail.com">
+    <form action="https://formspree.io/f/xvojlpak" method="POST">
+      <a href="" name="faleconosco"></a>
+      <h2 id="Title3">Fale Conosco</h2>
+      <br>
+      <div class="card" style="width: 30rem;" id="card-Footer">
+        <div class="card-body">
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="Input" placeholder="seuemail@gmail.com">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Mensagem</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" id="btnCard">Enviar</button>
         </div>
-        <div class="mb-3">
-          <label for="exampleFormControlTextarea1" class="form-label">Assunto</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <a href="#" class="btn btn-primary" id="btnCard">Enviar</a>
       </div>
-    </div>
+    </form>
+
     <img src="../Assets/LG.png" id="imgFooter" alt="">
     <div id="icons">
       <img src="../Assets/telefone.png" class="icon" id="iconTel" alt="">
