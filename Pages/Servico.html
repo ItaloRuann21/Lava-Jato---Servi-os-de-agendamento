@@ -17,34 +17,9 @@
       document.location.href = './Login.html'
       return;
     }
-    event.preventDefault();
-    const tipoServico = nomeServico;
-    var data = new Date();
-
-    const hora = data.getHours() + ":" + data.getMinutes();
-
-    var dd = String(data.getDate()).padStart(2, '0');
-    var mm = String(data.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = data.getFullYear();
-
-    data = today = mm + '/' + dd + '/' + yyyy;
-
-    if (tipoServico && data && hora) {
-      // Use && em vez de &
-      const mensagemPreSelecionada = `Olá, eu quero agendar meu serviço:\n*Tipo de serviço:* ${tipoServico}\n*Data marcada:* ${data}\n*Horário marcado:* ${hora}`
-    
-      // Substitua o número de telefone abaixo pelo número correto
-      const numeroTelefone = "557996641123"
-    
-      const mensagemCodificada = encodeURIComponent(mensagemPreSelecionada)
-    
-      const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefone}&text="${mensagemCodificada}"`
-      window.open(linkWhatsApp, '_blank').focus();
-    } else {
-      console.log("Dados necessários não estão definidos no localStorage.")
-    }
+    document.location.href = './Agendamento.html'
+    localStorage['Servico'] = nomeServico;
   }
-
 </script>
 <body>
   <nav class="navbar navbar-expand-lg " id="Nav">
