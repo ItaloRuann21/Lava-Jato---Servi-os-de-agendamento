@@ -9,7 +9,67 @@
   <link href="../Style/styleLogin.css" rel="stylesheet">
   <title>Login</title>
 </head>
+<style>
+  .hidden{
+    display: none;
+  }
+</style>
+<script>
+  var dados = {
+    email: "",
+    senha: ""
+  };
+  function showAlert(html, msg){
+    var div = document.getElementById(html);
+    if(div.classList.contains('hidden'))
+      div.classList.toggle('hidden');
 
+    div.innerHTML = msg;
+
+    if(html != 'div-error'){
+      setTimeout(function () {
+        div.classList.toggle('hidden');
+        document.location.href = "./Servico.html"
+      }, 5000);
+    }
+  }
+  function fazerRequisicao() {
+      event.preventDefault();
+      var dados = {
+        email: document.getElementById("email").value,
+        senha: document.getElementById("senha").value
+      };
+      var configuracao = {
+        method: 'POST', // Método da solicitação (no caso, POST)
+        headers: {
+            'Content-Type': 'application/json' // Tipo de conteúdo no corpo (JSON)
+        },
+        body: JSON.stringify(dados) // Corpo da solicitação no formato JSON
+      };
+      const onSuccess = response => {
+        localStorage['Auth'] = JSON.stringify("logado");
+        response.json().then(jsonResponse => showAlert('div-sucess', jsonResponse));
+      }
+
+      const onFailure = response => {
+        response.json().then(jsonResponse => showAlert('div-error', jsonResponse));
+        return response;
+      }
+
+      fetch('http://localhost:3000/api/login', configuracao)
+          .then(response => {
+              if (!response.ok) {
+                  throw response;
+              }
+              return response; // ou response.text() se a resposta não for JSON
+          })
+          .then(onSuccess, onFailure)
+          .catch(err => { 
+            console.error(err);
+          })
+  }
+
+</script>
 <body class="body">
   <nav class="navbar navbar-expand-lg " id="Nav">
     <div class="container-fluid">
@@ -30,23 +90,29 @@
       </div>
     </div>
   </nav>
+  <div id="div-sucess" class="alert alert-success hidden" role="alert">
+    A simple success alert—check it out!
+  </div>
+  <div id="div-error" class="alert alert-danger hidden" role="alert">
+    A simple danger alert—check it out!
+  </div>
   <br>
   <br>
   <form class="row g-3 needs-validation" id="Form">
     <div class="col-md-6" id="label">
-      <label for="nome" class="form-label">Email</label>
-      <input type="text" class="form-control" name="email" id="nome" placeholder="Digite seu e-mail" maxlength="20"
+      <label for="email" class="form-label">Email</label>
+      <input type="text" class="form-control" name="email" id="email" placeholder="Digite seu e-mail" 
         required>
       <br>
-      <label for="cpf" class="form-label">Senha</label>
-      <input type="password" class="form-control" name="senha" id="cpf" placeholder="Digite sua senha" maxlength="11"
-        pattern="[0-9]{11}" required>
+      <label for="senha" class="form-label">Senha</label>
+      <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite sua senha" maxlength="11"
+         required>
       <br>
       <a href="../Pages/Cadastro.html">Faça o Cadastro</a>
     </div>
 
     <div class="col-12">
-      <button class="btn btn-outline-dark" type="submit" id="btn2">Login</button>
+      <button onclick="fazerRequisicao()" class="btn btn-outline-dark" id="btn2">Login</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
