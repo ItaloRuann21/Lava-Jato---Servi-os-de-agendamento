@@ -1,12 +1,16 @@
 #Nav {
   background-color: #000000;
 }
-#NavLink {
-  margin-left: 4%;
-}
+/* #NavLink {
+} */
 #Link {
   color: white;
 }
+
+/* .navbar-brand-logout {
+  padding-left: 55px;
+} */
+
 #imgLogo {
   width: 20%;
   margin-left: 2%;

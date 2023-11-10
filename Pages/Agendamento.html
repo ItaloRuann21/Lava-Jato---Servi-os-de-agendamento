@@ -12,13 +12,12 @@
 <script>
   const tipoServico = localStorage.getItem('Servico');
   window.data = '';
-  window.hora = ''; 
-  window.onload = function()
-  {
+  window.hora = '';
+  window.onload = function () {
     document.getElementById("header-servico").textContent = tipoServico;
   }
 
-  function atualizarInformacoes(){
+  function atualizarInformacoes() {
     var date = new Date(document.getElementById("data").value);
     date.setHours(date.getHours() - 3);
 
@@ -27,7 +26,7 @@
     var yyyy = date.getFullYear();
 
     window.data = today = dd + '/' + mm + '/' + yyyy;
-    document.getElementById('service-data').textContent =  window.data;
+    document.getElementById('service-data').textContent = window.data;
 
     window.hora = document.getElementById("time").value;
     document.getElementById('service-hora').textContent = window.hora;
@@ -35,21 +34,21 @@
     //           <p id="service-data"></p>
     //           <p id="service-hora"></p>
   }
-  function Agendar(nomeServico){
+  function Agendar(nomeServico) {
     event.preventDefault();
-    if(!localStorage['Auth']){
+    if (!localStorage['Auth']) {
       document.location.href = './Login.html'
       return;
     }
     if (tipoServico && window.data && window.hora) {
       // Use && em vez de &
       const mensagemPreSelecionada = `Olá, eu quero agendar meu serviço:\n*Tipo de serviço:* ${tipoServico}\n*Data marcada:* ${window.data}\n*Horário marcado:* ${window.hora}`
-    
+
       // Substitua o número de telefone abaixo pelo número correto
-      const numeroTelefone = "557996641123"
-    
+      const numeroTelefone = "557999506852"
+
       const mensagemCodificada = encodeURIComponent(mensagemPreSelecionada)
-    
+
       const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefone}&text="${mensagemCodificada}"`
       var w1 = window.open(linkWhatsApp, '_blank').focus();
     } else {
@@ -57,6 +56,7 @@
     }
   }
 </script>
+
 <body class="body">
   <nav class="navbar navbar-expand-lg " id="Nav">
     <div class="container-fluid">
@@ -87,10 +87,12 @@
           <form class="row g-3 needs-validation" id="Form">
             <div class="col-md-6" id="label">
               <label for="nome" class="form-label">Data</label>
-              <input type="date" onchange="atualizarInformacoes()" class="form-control" name="data" id="data" min="" required>
+              <input type="date" onchange="atualizarInformacoes()" class="form-control" name="data" id="data" min=""
+                required>
               <br>
               <label for="cpf" class="form-label">Horas</label>
-              <input type="time" onchange="atualizarInformacoes()" class="form-control" name="time" id="time" min="8:00" max="17:00" required>
+              <input type="time" onchange="atualizarInformacoes()" class="form-control" name="time" id="time" min="8:00"
+                max="17:00" required>
               <br>
             </div>
           </form>
@@ -103,7 +105,7 @@
             <div class="card-body">
               <p class="info-service" id="info_services">Informações do serviço:</p>
               <p id="service"></p>
-              <p >
+              <p>
                 <strong>Data marcada: </strong> <span id="service-data"></span>
               </p>
               <p>
