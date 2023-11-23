@@ -21,6 +21,7 @@ logoutButton.addEventListener("click", function () {
     // Remove as chaves 'Auth' e 'Servico' do Local Storage
     localStorage.removeItem("Auth")
     localStorage.removeItem("Servico")
+    localStorage.removeItem("DatasReservadas")
 
     // Remove a mensagem da tela após 3 segundos
     document.body.removeChild(messageElement)

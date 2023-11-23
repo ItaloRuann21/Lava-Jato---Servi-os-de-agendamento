@@ -41,15 +41,26 @@
       senha: document.getElementById("senha").value
     };
     var configuracao = {
-      method: 'POST', // Método da solicitação (no caso, POST)
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json' // Tipo de conteúdo no corpo (JSON)
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(dados) // Corpo da solicitação no formato JSON
+      body: JSON.stringify(dados)
     };
     const onSuccess = response => {
-      localStorage['Auth'] = JSON.stringify("logado");
-      response.json().then(jsonResponse => showAlert('div-sucess', jsonResponse));
+      response.json().then(jsonResponse => {
+        if (dados.email === 'gestor@gmail.com' && dados.senha === 'gestor') {
+          // Exibe uma mensagem personalizada para o gestor
+          showAlert('div-sucess', 'Gestor logado!');
+          // Aguarda 2 segundos antes de redirecionar
+          setTimeout(() => {
+            document.location.href = "../Pages/Gerenciamento.html";
+          }, 2000);
+        } else {
+          localStorage['Auth'] = JSON.stringify("logado");
+          showAlert('div-sucess', jsonResponse);
+        }
+      });
     }
 
     const onFailure = response => {
@@ -62,7 +73,7 @@
         if (!response.ok) {
           throw response;
         }
-        return response; // ou response.text() se a resposta não for JSON
+        return response;
       })
       .then(onSuccess, onFailure)
       .catch(err => {

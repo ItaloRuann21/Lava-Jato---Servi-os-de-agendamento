@@ -27,7 +27,7 @@
   function bloquearData() {
     const dataSelecionada = new Date(document.getElementById("data").value);
     const inputHora = document.getElementById("time");
-    const horasDisponiveis = ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+    const horasDisponiveis = ['8:00', '8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
 
     const hoje = new Date(); // Data atual
     hoje.setHours(0, 0, 0, 0); // Define para a meia-noite
@@ -99,20 +99,19 @@
 
     function atualizarHoras() {
       const inputHora = document.getElementById("time");
-      const horaSelecionada = document.getElementById("data").valueAsDate;
-
+      const horaSelecionada = new Date(document.getElementById("data").value);
       const horaAtual = new Date();
+
       const horasDisponiveis = [];
 
-      if (horaSelecionada && horaSelecionada.toDateString() === horaAtual.toDateString()) {
+      // Lógica para calcular as horas disponíveis
+      if (horaSelecionada.toDateString() === horaAtual.toDateString()) {
         const hora = horaAtual.getHours();
         const minutos = horaAtual.getMinutes();
 
-        for (let i = hora; i <= 17; i++) {
+        for (let i = hora + 1; i <= 17; i++) {
           const horaFormatada = `${i.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
-          if (i >= 8) {
-            horasDisponiveis.push(horaFormatada);
-          }
+          horasDisponiveis.push(horaFormatada);
         }
       } else {
         for (let i = 8; i <= 17; i++) {
@@ -181,25 +180,6 @@
               <label for="cpf" class="form-label">Horas</label>
               <select class="form-select" onchange="atualizarHoras()" id="time" required>
                 <option value="">Selecione um horário</option>
-                <option value="08:00">08:00</option>
-                <option value="08:30">08:30</option>
-                <option value="09:00">09:00</option>
-                <option value="09:30">09:30</option>
-                <option value="10:00">10:00</option>
-                <option value="10:30">10:30</option>
-                <option value="11:00">11:00</option>
-                <option value="11:30">11:30</option>
-                <option value="12:00">12:00</option>
-                <option value="12:30">12:30</option>
-                <option value="13:00">13:00</option>
-                <option value="13:30">13:30</option>
-                <option value="14:00">14:00</option>
-                <option value="14:30">14:30</option>
-                <option value="15:00">15:00</option>
-                <option value="15:30">15:30</option>
-                <option value="16:00">16:00</option>
-                <option value="16:30">16:30</option>
-                <option value="17:00">17:00</option>
               </select>
               <br>
             </div>
