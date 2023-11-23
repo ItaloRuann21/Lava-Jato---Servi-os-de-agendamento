@@ -1,58 +1,62 @@
+// Importação dos módulos necessários
 const express = require("express")
 const mongoose = require("mongoose")
-require('dotenv').config();
-const cors = require('cors');
+require("dotenv").config() // Carrega as variáveis de ambiente do arquivo .env
+const cors = require("cors")
+
+// Criação da aplicação Express
 const app = express()
-app.use(cors());
-app.use(express.json());
-const port = 3000
-const router = express.Router();
-const bodyParser = require('body-parser');
+app.use(cors()) // Habilita o CORS para permitir solicitações de diferentes origens
+app.use(express.json()) // Habilita o uso de JSON no corpo das requisições
+const port = 3000 // Define a porta de escuta para o servidor
 
-app.use(bodyParser.json());
+// Configuração do bodyParser para analisar corpos de solicitação
+const bodyParser = require("body-parser")
+app.use(bodyParser.json())
 
-// console.log(process.env.DB_KEY)
-mongoose.connect(
-  process.env.DB_KEY
-);
+// Conexão com o banco de dados MongoDB usando mongoose
+mongoose.connect(process.env.DB_KEY) // Conecta ao banco de dados usando a chave fornecida no arquivo .env
 mongoose.connection.on("connected", function () {
-  console.log("Connected to Database");
-});
+  console.log("Connected to Database") // Mensagem exibida ao conectar ao banco de dados
+})
 mongoose.connection.on("error", (err) => {
-  console.log("Database error "+err);
-});
-
-
-
-// GET
-app.get("/", (req, res) => {
-  res.send("Hello World!")
+  console.log("Database error " + err) // Mensagem exibida em caso de erro na conexão com o banco de dados
 })
 
-// POST
+// Rota principal
+app.get("/", (req, res) => {
+  res.send("Hello World!") // Rota raiz que retorna "Hello World!"
+})
+
+// Rota POST para criar um novo usuário
 app.post("/", async (req, res) => {
+  // Cria um novo usuário com base nos dados enviados no corpo da solicitação
   const usuario = new Usuario({
     nome: req.body.nome,
     telefone: req.body.telefone,
     email: req.body.email,
     senha: req.body.senha,
   })
-  // await usuario.save({ timeout: 20000 })
-  res.send(usuario)
+  // await usuario.save({ timeout: 20000 }) - Possível salvamento do usuário no banco de dados
+  res.send(usuario) // Retorna os dados do usuário criado
 })
 
-app.use(function(err, req, res, next){
-  console.error(err);
-  res.status(422).send({error: err.message});
-});
-// Executar porta 3000
+// Middleware para lidar com erros
+app.use(function (err, req, res, next) {
+  console.error(err) // Registra o erro no console
+  res.status(422).send({ error: err.message }) // Retorna um status 422 e a mensagem de erro
+})
+
+// Inicia o servidor na porta definida
 app.listen(port, () => {
-  console.log(`Servidor executando na porta ${port}`)
-});
+  console.log(`Servidor executando na porta ${port}`) // Mensagem exibida ao iniciar o servidor na porta definida
+})
 
-app.get("/", function(req, res){
-  res.send("End point inválido");
-});
+// Rota de erro para qualquer outra requisição
+app.get("/", function (req, res) {
+  res.send("End point inválido") // Rota que retorna "End point inválido" para qualquer rota não especificada
+})
 
-const routes = require('./routes/api');
-app.use('/api', routes);
+// Importação e uso das rotas definidas em './routes/api'
+const routes = require("./routes/api")
+app.use("/api", routes) // Define o prefixo '/api' para todas as rotas definidas em './routes/api'
