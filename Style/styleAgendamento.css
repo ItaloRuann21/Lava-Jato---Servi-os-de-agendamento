@@ -19,6 +19,13 @@
   width: 7%;
   margin-left: 115%;
 }
+
+#logoutBtn {
+  height: 20%;
+  width: 20%;
+  margin-left: 115%;
+}
+
 #Title1 {
   color: #ffffff;
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;

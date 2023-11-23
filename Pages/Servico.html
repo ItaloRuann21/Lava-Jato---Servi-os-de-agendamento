@@ -10,17 +10,19 @@
   <title>Serviços</title>
 </head>
 <script>
-  
-  function Agendar(nomeServico){
+
+  function Agendar(nomeServico, precoServico) {
     event.preventDefault();
-    if(!localStorage['Auth']){
+    if (!localStorage['Auth']) {
       document.location.href = './Login.html'
       return;
     }
     document.location.href = './Agendamento.html'
     localStorage['Servico'] = nomeServico;
+    localStorage['PrecoServico'] = precoServico;
   }
 </script>
+
 <body>
   <nav class="navbar navbar-expand-lg " id="Nav">
     <div class="container-fluid">
@@ -57,7 +59,8 @@
               <h5 class="card-title">Lavagem Simples</h5>
               <p class="card-text">Lavagem mais rápida, onde prioriza a lataria do carro e os pneus ganham atenção
                 também, porém o motor fica de fora.</p>
-              <a href="../Pages/Agendamento.html" class="btn btn-primary"  onclick="Agendar('Lavagem Simples')" id="Btn">Agendar</a>
+              <a href="../Pages/Agendamento.html" class="btn btn-primary" onclick="Agendar('Lavagem Simples', 49.99)"
+                id="Btn">Agendar</a>
             </div>
           </div>
         </div>
@@ -68,7 +71,7 @@
               <h5 class="card-title">Lavagem Completa</h5>
               <p class="card-text">Além dos itens da lavagem simples, o motor, a parte de baixo do veículo também é
                 lavado e o interior é aspirado. </p>
-              <a class="btn btn-primary" id="Btn" onclick="Agendar('Serviço Completo')">Agendar</a>
+              <a class="btn btn-primary" id="Btn" onclick="Agendar('Serviço Completo', 549.99)">Agendar</a>
             </div>
           </div>
         </div>
@@ -79,7 +82,8 @@
               <h5 class="card-title">Polimento de Pintura</h5>
               <p class="card-text">Processo estético empregado no veículo. A tinta danificada é removida para ser
                 empregado outro procedimento de pintura. </p>
-              <a href="../Pages/Agendamento.html" class="btn btn-primary" id="Btn" onclick="Agendar('Polimento de Pintura')">Agendar</a>
+              <a href="../Pages/Agendamento.html" class="btn btn-primary" id="Btn"
+                onclick="Agendar('Polimento de Pintura', 125.99)">Agendar</a>
             </div>
           </div>
         </div>
@@ -98,7 +102,8 @@
               <h5 class="card-title">Higieninaçao Interna</h5>
               <p class="card-text">No serviço há uma limpeza detalhada que inclui teto, estofado, painel, lateral de
                 portas, carpete e porta-malas.</p>
-              <a href="../Pages/Agendamento.html" onclick="Agendar('Higieninaçao Interna')" class="btn btn-primary" id="Btn">Agendar</a>
+              <a href="../Pages/Agendamento.html" onclick="Agendar('Higieninaçao Interna', 375.99)"
+                class="btn btn-primary" id="Btn">Agendar</a>
             </div>
           </div>
         </div>
@@ -109,7 +114,8 @@
               <h5 class="card-title">Hidratação de Couro</h5>
               <p class="card-text">Consiste em um serviço que devolve umidade ao material, serve para conservar o
                 equipamento e garantir uma melhor estética.</p>
-              <a href="../Pages/Agendamento.html" onclick="Agendar('Hidratação de Couro')" class="btn btn-primary" id="Btn">Agendar</a>
+              <a href="../Pages/Agendamento.html" onclick="Agendar('Hidratação de Couro', 150.99)"
+                class="btn btn-primary" id="Btn">Agendar</a>
             </div>
           </div>
         </div>
@@ -120,7 +126,8 @@
               <h5 class="card-title">Polimento de Faróis</h5>
               <p class="card-text">É um processo de limpeza das luzes dianteiras do veículo, busca revitalizar os faróis
                 deteriorados com o tempo, o que os deixa com um aspecto de novo. </p>
-              <a href="../Pages/Agendamento.html" onclick="Agendar('Polimento de Faróis')" class="btn btn-primary" id="Btn">Agendar</a>
+              <a href="../Pages/Agendamento.html" onclick="Agendar('Polimento de Faróis', 115.99)"
+                class="btn btn-primary" id="Btn">Agendar</a>
             </div>
           </div>
         </div>

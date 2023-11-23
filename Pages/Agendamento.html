@@ -9,20 +9,79 @@
   <link href="../Style/styleAgendamento.css" rel="stylesheet">
   <title>Agendamento</title>
 </head>
+
 <script>
   const tipoServico = localStorage.getItem('Servico');
+  const precoServico = localStorage.getItem('PrecoServico')
   window.data = '';
   window.hora = '';
+
   window.onload = function () {
     document.getElementById("header-servico").textContent = tipoServico;
+    document.getElementById('valor-servico').value = precoServico;
+    document.getElementById("data").setAttribute('min', new Date().toISOString().split('T')[0]);
+
+    desabilitarDatasReservadas();
+  }
+
+  function bloquearData() {
+    const dataSelecionada = new Date(document.getElementById("data").value);
+    const inputHora = document.getElementById("time");
+    const horasDisponiveis = ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+
+    const hoje = new Date(); // Data atual
+    hoje.setHours(0, 0, 0, 0); // Define para a meia-noite
+
+    const dataEscolhida = new Date(dataSelecionada);
+    dataEscolhida.setHours(0, 0, 0, 0); // Define para a meia-noite
+
+    if (dataEscolhida < hoje) {
+      document.getElementById("data").value = '';
+      alert("Escolha uma data futura.");
+      return;
+    }
+
+    document.getElementById("data").setAttribute('min', hoje.toISOString().split('T')[0]);
+
+    const reservasSalvas = localStorage.getItem('DatasReservadas');
+    const datasReservadas = reservasSalvas ? JSON.parse(reservasSalvas) : [];
+
+    if (datasReservadas.includes(dataSelecionada.toISOString().split('T')[0])) {
+      alert("Essa data já foi reservada.");
+      document.getElementById("data").value = ''; // Limpa a seleção da data
+      return;
+    } else {
+      datasReservadas.push(dataSelecionada.toISOString().split('T')[0]);
+      localStorage.setItem('DatasReservadas', JSON.stringify(datasReservadas));
+    }
+
+    inputHora.innerHTML = '';
+    horasDisponiveis.forEach(hora => {
+      const option = document.createElement('option');
+      option.text = hora;
+      inputHora.add(option);
+    });
+
+    if (dataEscolhida.getTime() === hoje.getTime()) {
+      const horaAtual = new Date().getHours();
+      for (let i = 0; i < horasDisponiveis.length; i++) {
+        const hora = parseInt(horasDisponiveis[i].split(':')[0]);
+        if (hora < horaAtual) {
+          inputHora.remove(0);
+        } else {
+          break;
+        }
+      }
+    }
   }
 
   function atualizarInformacoes() {
+    bloquearData();
     var date = new Date(document.getElementById("data").value);
     date.setHours(date.getHours() - 3);
 
     var dd = String(date.getDate() + 1).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var mm = String(date.getMonth() + 1).padStart(2, '0');
     var yyyy = date.getFullYear();
 
     window.data = today = dd + '/' + mm + '/' + yyyy;
@@ -30,9 +89,6 @@
 
     window.hora = document.getElementById("time").value;
     document.getElementById('service-hora').textContent = window.hora;
-    // <p id="service"></p>
-    //           <p id="service-data"></p>
-    //           <p id="service-hora"></p>
   }
   function Agendar(nomeServico) {
     event.preventDefault();
@@ -40,6 +96,39 @@
       document.location.href = './Login.html'
       return;
     }
+
+    function atualizarHoras() {
+      const inputHora = document.getElementById("time");
+      const horaSelecionada = document.getElementById("data").valueAsDate;
+
+      const horaAtual = new Date();
+      const horasDisponiveis = [];
+
+      if (horaSelecionada && horaSelecionada.toDateString() === horaAtual.toDateString()) {
+        const hora = horaAtual.getHours();
+        const minutos = horaAtual.getMinutes();
+
+        for (let i = hora; i <= 17; i++) {
+          const horaFormatada = `${i.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+          if (i >= 8) {
+            horasDisponiveis.push(horaFormatada);
+          }
+        }
+      } else {
+        for (let i = 8; i <= 17; i++) {
+          const horaFormatada = `${i.toString().padStart(2, '0')}:00`;
+          horasDisponiveis.push(horaFormatada);
+        }
+      }
+
+      inputHora.innerHTML = '';
+      horasDisponiveis.forEach(hora => {
+        const option = document.createElement('option');
+        option.text = hora;
+        inputHora.add(option);
+      });
+    }
+
     if (tipoServico && window.data && window.hora) {
       // Use && em vez de &
       const mensagemPreSelecionada = `Olá, eu quero agendar meu serviço:\n*Tipo de serviço:* ${tipoServico}\n*Data marcada:* ${window.data}\n*Horário marcado:* ${window.hora}`
@@ -70,10 +159,9 @@
         <div class="navbar-nav" id="NavLink">
           <a class="nav-link active" id="Link" aria-current="page" href="Index.html">Home</a>
           <a class="nav-link active" id="Link" href="Servico.html">Serviços</a>
-          <a class="nav-link active" id="Link" href="#faleconosco">Fale Conosco</a>
+          <a class="nav-link active" id="Link" href="./Index.html#faleconosco">Fale Conosco</a>
         </div>
-        <a class="navbar-brand" id="Link" href="../Pages/Login.html"><img src="../Assets/login.png" alt=""
-            id="imgLogin"></a>
+        <a class="navbar-brand" id="Link" href="#"><img src="../Assets/logout2.png" alt="Logout" id="logoutBtn"></a>
       </div>
     </div>
   </nav>
@@ -91,8 +179,28 @@
                 required>
               <br>
               <label for="cpf" class="form-label">Horas</label>
-              <input type="time" onchange="atualizarInformacoes()" class="form-control" name="time" id="time" min="8:00"
-                max="17:00" required>
+              <select class="form-select" onchange="atualizarHoras()" id="time" required>
+                <option value="">Selecione um horário</option>
+                <option value="08:00">08:00</option>
+                <option value="08:30">08:30</option>
+                <option value="09:00">09:00</option>
+                <option value="09:30">09:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+              </select>
               <br>
             </div>
           </form>
@@ -103,30 +211,38 @@
           <div class="card" id="Form2">
             <h5 class="card-header" id="header-servico"></h5>
             <div class="card-body">
-              <p class="info-service" id="info_services">Informações do serviço:</p>
-              <p id="service"></p>
-              <p>
-                <strong>Data marcada: </strong> <span id="service-data"></span>
-              </p>
-              <p>
-                <strong>Hora marcada: </strong> <span id="service-hora"></span>
-              </p>
+              <!-- <label for="tipo-servico" class="form-label">Tipo de serviço</label>
+              <select class="form-select mb-3" id="tipo-servico" required>
+                <option value="">Selecione o tipo de serviço</option>
+                <option value="Lavagem externa">Lavagem externa</option>
+                <option value="Lavagem interna">Lavagem interna</option>
+                <option value="Polimento">Polimento</option>
+              </select> -->
+
+
+              <label for="detalhes-carro" class="form-label">Detalhes adicionais do carro</label>
+              <textarea class="form-control mb-3" id="detalhes-carro" rows="3"
+                placeholder="Descreva detalhes específicos sobre o carro"></textarea>
+
+              <label for="valor-servico" class="form-label">Valor do serviço</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="valor-prefixo">R$</span>
+                <input type="text" class="form-control" placeholder="100" id="valor-servico" disabled>
+              </div>
+
               <a target="_blank" class="btn btn-primary" id="btn3" onclick="Agendar()">Agendar</a>
             </div>
-
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
-  <script src="/js/servicos.js"></script>
-  <script src="/js/agendamento.js"></script>
-  <script src="/js/dataehora.js"></script>
-  <script src="/js/agendar.js"></script>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"></script>
+    <script src="../utils/logout.js"></script>
 </body>
 
 </html>
