@@ -20,6 +20,16 @@
       }
     };
 
+    function mostrarPreview() {
+      let nomeDoServico = document.getElementById("nome-servico").value;
+      let descDoServico = document.getElementById("desc-servico").value;
+
+      if (nomeDoServico && descDoServico) {
+        document.getElementById("preview-title").innerHTML = nomeDoServico;
+        document.getElementById("preview-desc").innerHTML = descDoServico;
+      }
+    }
+
     function logout() {
       debugger;
       localStorage.removeItem("Auth");
@@ -55,6 +65,56 @@
         </div>
       </div>
     </nav>
+
+    <section class="cadastro-section">
+      <h2 class="mb-3">Cadastro de Serviço</h2>
+      <div style="display: flex; gap: 25px">
+        <div class="card">
+          <div class="card-body" style="width: 40vw">
+            <div class="mb-2">
+              <label class="form-label">Nome do serviço</label>
+              <input type="text" id="nome-servico" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Descrição do serviço</label>
+              <input type="text" id="desc-servico" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Preço</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="valor-prefixo">R$</span>
+                <input type="number" class="form-control" placeholder="100" />
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-2 mx-3"
+            style="display: flex; justify-content: space-between"
+          >
+            <button class="btn btn-primary" onclick="mostrarPreview()">
+              Preview
+            </button>
+            <button class="btn btn-primary">Criar Serviço</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card" style="width: 18rem">
+            <img
+              src="../Assets/default-image.jpg"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title" id="preview-title">Nome do Serviço</h5>
+              <p class="card-text" id="preview-desc">Descrição do Serviço</p>
+              <div style="display: flex; justify-content: flex-end">
+                <a class="btn btn-secondary" disabled>Agendar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <!---->
     <h2 id="Title1">Gerenciamento de Serviços</h2>
     <!---->

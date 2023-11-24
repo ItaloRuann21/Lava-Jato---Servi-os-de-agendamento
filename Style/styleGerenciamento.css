@@ -87,30 +87,35 @@
   margin-top: -13%;
   margin-bottom: 5%;
 }
-
+#CardProgresso {
+  width: 70%;
+  height: 125%;
+}
+#ContainerProgresso {
+  margin-left: 11.5%;
+  margin-bottom: 5%;
+}
+#label {
+  margin-left: 4%;
+}
 /*##  Progresso  ##*/
-@property --progress-value {
-  syntax: "<integer>";
-  inherits: false;
-  initial-value: 0;
+
+.Footer {
+  background-color: #000000;
+  height: 60%;
+}
+#imgFooter {
+  width: 30%;
+  margin-top: 2%;
+  margin-left: 26%;
+  position: absolute;
 }
 
-@keyframes html-progress {
-  to {
-    --progress-value: 92;
-  }
-}
-
-@keyframes css-progress {
-  to {
-    --progress-value: 87;
-  }
-}
-
-@keyframes js-progress {
-  to {
-    --progress-value: 73;
-  }
+.cadastro-section {
+  display: flex;
+  align-items: center;
+  padding: 32px 0;
+  flex-direction: column;
 }
 
 .progress-bar {
@@ -151,26 +156,28 @@ progress {
   width: 0;
   height: 0;
 }
-#CardProgresso {
-  width: 70%;
-  height: 125%;
-}
-#ContainerProgresso {
-  margin-left: 11.5%;
-  margin-bottom: 5%;
-}
-#label {
-  margin-left: 4%;
-}
-/*##  Progresso  ##*/
 
-.Footer {
-  background-color: #000000;
-  height: 60%;
+/*##  Progresso  ##*/
+@property --progress-value {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
 }
-#imgFooter {
-  width: 30%;
-  margin-top: 2%;
-  margin-left: 26%;
-  position: absolute;
+
+@keyframes html-progress {
+  to {
+    --progress-value: 92;
+  }
+}
+
+@keyframes css-progress {
+  to {
+    --progress-value: 87;
+  }
+}
+
+@keyframes js-progress {
+  to {
+    --progress-value: 73;
+  }
 }
