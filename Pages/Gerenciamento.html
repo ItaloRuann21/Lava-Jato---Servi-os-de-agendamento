@@ -1,200 +1,215 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link href="../Style/styleGerenciamento.css" rel="stylesheet" />
+    <title>Lava Jato</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link href="../Style/styleGerenciamento.css" rel="stylesheet">
-  <title>Lava Jato</title>
-</head>
+  <script>
+    window.onload = () => {
+      if (!localStorage.getItem("Auth")) {
+        window.location.href = "../Pages/Login.html";
+      }
+    };
 
-<script>
-  function logout() {
-    debugger;
-    localStorage.removeItem("Auth");
-  }
-</script>
+    function logout() {
+      debugger;
+      localStorage.removeItem("Auth");
+    }
+  </script>
 
-<body id="Body">
-  <nav class="navbar navbar-expand-lg " id="Nav">
-    <div class="container-fluid">
-      <a class="navbar-brand" id="Link" href="../Pages/Index.html"><img src="../Assets/logo1.png" alt=""
-          id="imgLogo"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav" id="NavLink">
-          <!-- <a class="nav-link active" id="Link" aria-current="page" href="Index.html">Home</a>
+  <body id="Body">
+    <nav class="navbar navbar-expand-lg" id="Nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" id="Link" href="../Pages/Index.html"
+          ><img src="../Assets/logo1.png" alt="" id="imgLogo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav" id="NavLink">
+            <!-- <a class="nav-link active" id="Link" aria-current="page" href="Index.html">Home</a>
           <a class="nav-link active" id="Link" href="Servico.html">Serviços</a>
           <a class="nav-link active" id="Link" href="#faleconosco">Fale Conosco</a> -->
+          </div>
+          <a class="navbar-brand" id="Link" href="#"
+            ><img src="../Assets/logout2.png" alt="Logout" id="logoutBtn"
+          /></a>
         </div>
-        <a class="navbar-brand" id="Link" href="#"><img src="../Assets/logout2.png" alt="Logout" id="logoutBtn"></a>
       </div>
-    </div>
-  </nav>
-  <!---->
-  <h2 id="Title1">Gerenciamento de Serviços</h2>
-  <!---->
-  <!---->
+    </nav>
+    <!---->
+    <h2 id="Title1">Gerenciamento de Serviços</h2>
+    <!---->
+    <!---->
 
-  <div class="row" style="width: 100%;">
-    <div class="col" style="width: 50%;">
-      <div class="container1">
-        <div class="card" id="CardTitle">
-          <h5 class="card-title" id="TitleCard" align="center">Pendentes</h5>
-        </div>
+    <div class="row" style="width: 100%">
+      <div class="col" style="width: 50%">
+        <div class="container1">
+          <div class="card" id="CardTitle">
+            <h5 class="card-title" id="TitleCard" align="center">Pendentes</h5>
+          </div>
 
-        <div class="card" id="CardPendentes">
-          <div class="card-body">
-            <h5 class="card-title">Nome</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-            <p class="card-text">Descriçao</p>
-            <a href="#" class="btn btn-primary" id="BtnCard">Concluir</a>
-          </div>
-        </div>
-        <!---->
-        <div class="card" id="CardPendentes">
-          <div class="card-body">
-            <h5 class="card-title">Nome</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-            <p class="card-text">Descriçao</p>
-            <a href="#" class="btn btn-primary" id="BtnCard">Concluir</a>
-          </div>
-        </div>
-        <!---->
-        <div class="card" id="CardPendentes">
-          <div class="card-body">
-            <h5 class="card-title">Nome</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-            <p class="card-text">Descriçao</p>
-            <a href="#" class="btn btn-primary" id="BtnCard">Concluir</a>
-          </div>
-        </div>
-        <!---->
-      </div>
-    </div>
-
-    <div class="col" style="width: 30%;">
-      <div class="container2">
-        <div class="card" id="CardTitle">
-          <h5 class="card-title" id="TitleCard" align="center">Finalizados</h5>
-        </div>
-
-        <div class="card" id="CardPendentes">
-          <div class="card-body">
-            <h5 class="card-title">Nome</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-            <p class="card-text">Descriçao</p>
-          </div>
-        </div>
-        <!---->
-        <div class="card" id="CardPendentes">
-          <div class="card-body">
-            <h5 class="card-title">Nome</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-            <p class="card-text">Descriçao</p>
-          </div>
-        </div>
-        <!---->
-        <div class="card" id="CardPendentes">
-          <div class="card-body">
-            <h5 class="card-title">Nome</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-            <p class="card-text">Descriçao</p>
-          </div>
-        </div>
-        <!---->
-      </div>
-    </div>
-  </div>
-  <!---->
-
-  <h2 id="Title2">Metricas Diárias</h2>
-  <!---->
-  <div class="container" id="ContainerProgresso">
-    <div class="row">
-      <div class="col">
-
-        <div class="card" id="CardProgresso">
-          <div class="card-body">
-            <div class="progress-bar-container">
-              <h3>
-                <label id="label">Servicos Diários</label>
-              </h3>
-              <div class="progress-bar Bar">
-                <progress id="html" min="0" max="100" value="92"></progress>
-              </div>
+          <div class="card" id="CardPendentes">
+            <div class="card-body">
+              <h5 class="card-title">Nome</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
+              <p class="card-text">Descriçao</p>
+              <a href="#" class="btn btn-primary" id="BtnCard">Concluir</a>
             </div>
           </div>
-        </div>
-
-      </div>
-      <div class="col">
-
-        <div class="card" id="CardProgresso">
-          <div class="card-body">
-            <div class="progress-bar-container">
-              <h3>
-                <label id="label">Valores Diários</label>
-              </h3>
-              <div class="progress-bar Bar">
-                <progress id="css" min="0" max="100" value="87"></progress>
-              </div>
+          <!---->
+          <div class="card" id="CardPendentes">
+            <div class="card-body">
+              <h5 class="card-title">Nome</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
+              <p class="card-text">Descriçao</p>
+              <a href="#" class="btn btn-primary" id="BtnCard">Concluir</a>
             </div>
           </div>
-        </div>
-
-      </div>
-      <div class="col">
-
-        <div class="card" id="CardProgresso">
-          <div class="card-body">
-            <div class="progress-bar-container">
-              <h3>
-                <label id="label">Lucros Diários</label>
-              </h3>
-              <div class="progress-bar Bar">
-                <progress id="js" min="0" max="100" value="73"></progress>
-              </div>
+          <!---->
+          <div class="card" id="CardPendentes">
+            <div class="card-body">
+              <h5 class="card-title">Nome</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
+              <p class="card-text">Descriçao</p>
+              <a href="#" class="btn btn-primary" id="BtnCard">Concluir</a>
             </div>
           </div>
+          <!---->
         </div>
+      </div>
 
+      <div class="col" style="width: 30%">
+        <div class="container2">
+          <div class="card" id="CardTitle">
+            <h5 class="card-title" id="TitleCard" align="center">
+              Finalizados
+            </h5>
+          </div>
+
+          <div class="card" id="CardPendentes">
+            <div class="card-body">
+              <h5 class="card-title">Nome</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
+              <p class="card-text">Descriçao</p>
+            </div>
+          </div>
+          <!---->
+          <div class="card" id="CardPendentes">
+            <div class="card-body">
+              <h5 class="card-title">Nome</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
+              <p class="card-text">Descriçao</p>
+            </div>
+          </div>
+          <!---->
+          <div class="card" id="CardPendentes">
+            <div class="card-body">
+              <h5 class="card-title">Nome</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
+              <p class="card-text">Descriçao</p>
+            </div>
+          </div>
+          <!---->
+        </div>
       </div>
     </div>
-  </div>
-  <br>
-  <br>
+    <!---->
 
-  <footer class="Footer">
-    <div class="container px-4">
-      <div class="row gx-5">
+    <h2 id="Title2">Metricas Diárias</h2>
+    <!---->
+    <div class="container" id="ContainerProgresso">
+      <div class="row">
         <div class="col">
-          <img src="../Assets/LG.png" id="imgFooter" alt="">
+          <div class="card" id="CardProgresso">
+            <div class="card-body">
+              <div class="progress-bar-container">
+                <h3>
+                  <label id="label">Servicos Diários</label>
+                </h3>
+                <div class="progress-bar Bar">
+                  <progress id="html" min="0" max="100" value="92"></progress>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card" id="CardProgresso">
+            <div class="card-body">
+              <div class="progress-bar-container">
+                <h3>
+                  <label id="label">Valores Diários</label>
+                </h3>
+                <div class="progress-bar Bar">
+                  <progress id="css" min="0" max="100" value="87"></progress>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card" id="CardProgresso">
+            <div class="card-body">
+              <div class="progress-bar-container">
+                <h3>
+                  <label id="label">Lucros Diários</label>
+                </h3>
+                <div class="progress-bar Bar">
+                  <progress id="js" min="0" max="100" value="73"></progress>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <br />
+    <br />
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-  </footer>
+    <footer class="Footer">
+      <div class="container px-4">
+        <div class="row gx-5">
+          <div class="col">
+            <img src="../Assets/LG.png" id="imgFooter" alt="" />
+          </div>
+        </div>
+      </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
-  <script src="../utils/logout.js"></script>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    </footer>
 
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../utils/logout.js"></script>
+  </body>
 </html>
