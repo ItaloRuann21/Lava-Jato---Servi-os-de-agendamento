@@ -1,188 +1,298 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link href="../Style/styleService.css" rel="stylesheet">
-  <title>Serviços</title>
-</head>
-<script>
-
-  function Agendar(nomeServico, precoServico) {
-    event.preventDefault();
-    if (!localStorage['Auth']) {
-      document.location.href = './Login.html'
-      return;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link href="../Style/styleService.css" rel="stylesheet" />
+    <title>Serviços</title>
+  </head>
+  <script>
+    function Agendar(nomeServico, precoServico) {
+      event.preventDefault();
+      if (!localStorage["Auth"]) {
+        document.location.href = "./Login.html";
+        return;
+      }
+      document.location.href = "./Agendamento.html";
+      localStorage["Servico"] = nomeServico;
+      localStorage["PrecoServico"] = precoServico;
     }
-    document.location.href = './Agendamento.html'
-    localStorage['Servico'] = nomeServico;
-    localStorage['PrecoServico'] = precoServico;
-  }
-</script>
+  </script>
 
-<body>
-  <nav class="navbar navbar-expand-lg " id="Nav">
-    <div class="container-fluid">
-      <a class="navbar-brand" id="Link" href="../Pages/Index.html"><img src="../Assets/logo1.png" alt=""
-          id="imgLogo"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav" id="NavLink">
-          <a class="nav-link active" id="Link" aria-current="page" href="Index.html">Home</a>
-          <a class="nav-link active" id="Link" href="Servico.html">Serviços</a>
-          <a class="nav-link active" id="Link" href="#faleconosco">Fale Conosco</a>
+  <body>
+    <nav class="navbar navbar-expand-lg" id="Nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" id="Link" href="../Pages/Index.html"
+          ><img src="../Assets/logo1.png" alt="" id="imgLogo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav" id="NavLink">
+            <a
+              class="nav-link active"
+              id="Link"
+              aria-current="page"
+              href="Index.html"
+              >Home</a
+            >
+            <a class="nav-link active" id="Link" href="Servico.html"
+              >Serviços</a
+            >
+            <a class="nav-link active" id="Link" href="#faleconosco"
+              >Fale Conosco</a
+            >
+          </div>
+          <a class="navbar-brand" id="Link" href="../Pages/Login.html"
+            ><img src="../Assets/login.png" alt="" id="imgLogin"
+          /></a>
         </div>
-        <a class="navbar-brand" id="Link" href="../Pages/Login.html"><img src="../Assets/login.png" alt=""
-            id="imgLogin"></a>
       </div>
-    </div>
-  </nav>
-  <img src="../Assets/ServiceBanner.png" alt="" id="Banner">
-  <img src="../Assets/ServiceName.png" alt="" id="Nome">
+    </nav>
+    <img src="../Assets/ServiceBanner.png" alt="" id="Banner" />
+    <img src="../Assets/ServiceName.png" alt="" id="Nome" />
 
-  <div class="Service">
-    <h2 id="Title2">Serviços</h2>
-    <br>
-    <br>
-    <div class="container text-center">
-      <div class="row align-items-center" id="Col">
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="../Assets/i1.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Lavagem Simples</h5>
-              <p class="card-text">Lavagem mais rápida, onde prioriza a lataria do carro e os pneus ganham atenção
-                também, porém o motor fica de fora.</p>
-              <a href="../Pages/Agendamento.html" class="btn btn-primary" onclick="Agendar('Lavagem Simples', 49.99)"
-                id="Btn">Agendar</a>
+    <div class="Service">
+      <h2 id="Title2">Serviços</h2>
+      <br />
+      <br />
+      <div class="container text-center">
+        <div class="row align-items-center" id="Col">
+          <div class="col">
+            <div class="card" style="width: 18rem">
+              <img
+                src="../Assets/servicos/i1.png"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Lavagem Simples</h5>
+                <p class="card-text">
+                  Lavagem mais rápida, onde prioriza a lataria do carro e os
+                  pneus ganham atenção também, porém o motor fica de fora.
+                </p>
+                <a
+                  href="../Pages/Agendamento.html"
+                  class="btn btn-primary"
+                  onclick="Agendar('Lavagem Simples', 49.99)"
+                  id="Btn"
+                  >Agendar</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" style="width: 18rem">
+              <img
+                src="../Assets/servicos/i3.png"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Lavagem Completa</h5>
+                <p class="card-text">
+                  Além dos itens da lavagem simples, o motor, a parte de baixo
+                  do veículo também é lavado e o interior é aspirado.
+                </p>
+                <a
+                  class="btn btn-primary"
+                  id="Btn"
+                  onclick="Agendar('Serviço Completo', 549.99)"
+                  >Agendar</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" style="width: 18rem">
+              <img
+                src="../Assets/servicos/i5.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Polimento de Pintura</h5>
+                <p class="card-text">
+                  Processo estético empregado no veículo. A tinta danificada é
+                  removida para ser empregado outro procedimento de pintura.
+                </p>
+                <a
+                  href="../Pages/Agendamento.html"
+                  class="btn btn-primary"
+                  id="Btn"
+                  onclick="Agendar('Polimento de Pintura', 125.99)"
+                  >Agendar</a
+                >
+              </div>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="../Assets/i3.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Lavagem Completa</h5>
-              <p class="card-text">Além dos itens da lavagem simples, o motor, a parte de baixo do veículo também é
-                lavado e o interior é aspirado. </p>
-              <a class="btn btn-primary" id="Btn" onclick="Agendar('Serviço Completo', 549.99)">Agendar</a>
+      </div>
+      <!---->
+      <br />
+      <br />
+
+      <div class="container text-center">
+        <div class="row align-items-center" id="Col">
+          <div class="col">
+            <div class="card" style="width: 18rem">
+              <img
+                src="../Assets/servicos/i4.png"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Higienização Interna</h5>
+                <p class="card-text">
+                  No serviço há uma limpeza detalhada que inclui teto, estofado,
+                  painel, lateral de portas, carpete e porta-malas.
+                </p>
+                <a
+                  href="../Pages/Agendamento.html"
+                  onclick="Agendar('higienização Interna', 375.99)"
+                  class="btn btn-primary"
+                  id="Btn"
+                  >Agendar</a
+                >
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="../Assets/i5.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Polimento de Pintura</h5>
-              <p class="card-text">Processo estético empregado no veículo. A tinta danificada é removida para ser
-                empregado outro procedimento de pintura. </p>
-              <a href="../Pages/Agendamento.html" class="btn btn-primary" id="Btn"
-                onclick="Agendar('Polimento de Pintura', 125.99)">Agendar</a>
+          <div class="col">
+            <div class="card" style="width: 18rem">
+              <img
+                src="../Assets/servicos/i9.png"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Hidratação de Couro</h5>
+                <p class="card-text">
+                  Consiste em um serviço que devolve umidade ao material, serve
+                  para conservar o equipamento e garantir uma melhor estética.
+                </p>
+                <a
+                  href="../Pages/Agendamento.html"
+                  onclick="Agendar('Hidratação de Couro', 150.99)"
+                  class="btn btn-primary"
+                  id="Btn"
+                  >Agendar</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" style="width: 18rem">
+              <img
+                src="../Assets/servicos/i8.jpeg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">Polimento de Faróis</h5>
+                <p class="card-text">
+                  É um processo de limpeza das luzes dianteiras do veículo,
+                  busca revitalizar os faróis deteriorados com o tempo, o que os
+                  deixa com um aspecto de novo.
+                </p>
+                <a
+                  href="../Pages/Agendamento.html"
+                  onclick="Agendar('Polimento de Faróis', 115.99)"
+                  class="btn btn-primary"
+                  id="Btn"
+                  >Agendar</a
+                >
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!---->
-    <br>
-    <br>
+    <br />
+    <br />
 
-    <div class="container text-center">
-      <div class="row align-items-center" id="Col">
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="../Assets/i4.png" class="card-img-top" alt="...">
+    <div>
+      <footer class="Footer">
+        <br />
+        <form action="https://formspree.io/f/xvojlpak" method="POST">
+          <a href="" name="faleconosco"></a>
+          <h2 id="Title3">Fale Conosco</h2>
+          <br />
+          <div class="card" style="width: 30rem" id="card-Footer">
             <div class="card-body">
-              <h5 class="card-title">Higieninaçao Interna</h5>
-              <p class="card-text">No serviço há uma limpeza detalhada que inclui teto, estofado, painel, lateral de
-                portas, carpete e porta-malas.</p>
-              <a href="../Pages/Agendamento.html" onclick="Agendar('Higieninaçao Interna', 375.99)"
-                class="btn btn-primary" id="Btn">Agendar</a>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  id="Input"
+                  placeholder="seuemail@gmail.com"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label"
+                  >Mensagem</label
+                >
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  name="message"
+                  rows="3"
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" id="btnCard">
+                Enviar
+              </button>
             </div>
           </div>
+        </form>
+        <img src="../Assets/LG.png" id="imgFooter" alt="" />
+        <div id="icons">
+          <img src="../Assets/telefone.png" class="icon" id="iconTel" alt="" />
+          <h5 class="textFooter" id="textTel">(79) 99934-3456</h5>
+          <br />
+          <img src="../Assets/email.png" class="icon" id="iconEmail" alt="" />
+          <h5 class="textFooter" id="textEmail">masterclean@gmail.com</h5>
+          <br />
+          <img
+            src="../Assets/instagram.png"
+            class="icon"
+            id="iconInsta"
+            alt=""
+          />
+          <h5 class="textFooter" id="textInsta">@masterclean</h5>
         </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="../Assets/i9.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Hidratação de Couro</h5>
-              <p class="card-text">Consiste em um serviço que devolve umidade ao material, serve para conservar o
-                equipamento e garantir uma melhor estética.</p>
-              <a href="../Pages/Agendamento.html" onclick="Agendar('Hidratação de Couro', 150.99)"
-                class="btn btn-primary" id="Btn">Agendar</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="../Assets/i8.jpeg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Polimento de Faróis</h5>
-              <p class="card-text">É um processo de limpeza das luzes dianteiras do veículo, busca revitalizar os faróis
-                deteriorados com o tempo, o que os deixa com um aspecto de novo. </p>
-              <a href="../Pages/Agendamento.html" onclick="Agendar('Polimento de Faróis', 115.99)"
-                class="btn btn-primary" id="Btn">Agendar</a>
-            </div>
-          </div>
-        </div>
-      </div>
+        <br />
+        <br />
+        <br />
+      </footer>
     </div>
-  </div>
-  <!---->
-  <br>
-  <br>
-
-  <div>
-    <footer class="Footer">
-
-      <br>
-      <form action="https://formspree.io/f/xvojlpak" method="POST">
-        <a href="" name="faleconosco"></a>
-        <h2 id="Title3">Fale Conosco</h2>
-        <br>
-        <div class="card" style="width: 30rem;" id="card-Footer">
-          <div class="card-body">
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Email</label>
-              <input type="email" class="form-control" name="email" id="Input" placeholder="seuemail@gmail.com">
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">Mensagem</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" id="btnCard">Enviar</button>
-          </div>
-        </div>
-      </form>
-      <img src="../Assets/LG.png" id="imgFooter" alt="">
-      <div id="icons">
-        <img src="../Assets/telefone.png" class="icon" id="iconTel" alt="">
-        <h5 class="textFooter" id="textTel">(79) 99934-3456</h5>
-        <br>
-        <img src="../Assets/email.png" class="icon" id="iconEmail" alt="">
-        <h5 class="textFooter" id="textEmail">masterclean@gmail.com</h5>
-        <br>
-        <img src="../Assets/instagram.png" class="icon" id="iconInsta" alt="">
-        <h5 class="textFooter" id="textInsta">@masterclean</h5>
-      </div>
-      <br>
-      <br>
-      <br>
-    </footer>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
-  <script src="/js/agendamento.js"></script>
-  <script src="/js/servicos.js"></script>
-  <script src="/js/agendar.js"></script>
-  <script src="/js/dataehora.js"></script>
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/agendamento.js"></script>
+    <script src="/js/servicos.js"></script>
+    <script src="/js/agendar.js"></script>
+    <script src="/js/dataehora.js"></script>
+  </body>
 </html>

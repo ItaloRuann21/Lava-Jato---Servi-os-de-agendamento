@@ -16,6 +16,7 @@
   <script>
     window.onload = () => {
       if (!localStorage.getItem("Auth")) {
+        // Caso der erro para acessar a pagina logado, commentar a linha abaixo
         window.location.href = "../Pages/Login.html";
       }
     };
@@ -66,7 +67,7 @@
       </div>
     </nav>
 
-    <section class="cadastro-section">
+    <section class="section-container">
       <h2 class="mb-3">Cadastro de Serviço</h2>
       <div style="display: flex; gap: 25px">
         <div class="card">
@@ -115,154 +116,254 @@
         </div>
       </div>
     </section>
-    <!---->
-    <h2 id="Title1">Gerenciamento de Serviços</h2>
-    <!---->
-    <!---->
 
-    <div class="row" style="width: 100%">
-      <div class="col" style="width: 50%">
-        <div class="container1">
-          <div class="card" id="CardTitle">
-            <h5 class="card-title" id="TitleCard" align="center">Pendentes</h5>
-          </div>
-
-          <div class="card" id="CardPendentes">
-            <div class="card-body">
-              <h5 class="card-title">Nome</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-              <p class="card-text">Descriçao</p>
-              <a href="#" class="btn btn-primary" id="BtnCard">Concluir</a>
-            </div>
-          </div>
-          <!---->
-          <div class="card" id="CardPendentes">
-            <div class="card-body">
-              <h5 class="card-title">Nome</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-              <p class="card-text">Descriçao</p>
-              <a href="#" class="btn btn-primary" id="BtnCard">Concluir</a>
-            </div>
-          </div>
-          <!---->
-          <div class="card" id="CardPendentes">
-            <div class="card-body">
-              <h5 class="card-title">Nome</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-              <p class="card-text">Descriçao</p>
-              <a href="#" class="btn btn-primary" id="BtnCard">Concluir</a>
-            </div>
-          </div>
-          <!---->
-        </div>
-      </div>
-
-      <div class="col" style="width: 30%">
-        <div class="container2">
-          <div class="card" id="CardTitle">
-            <h5 class="card-title" id="TitleCard" align="center">
-              Finalizados
-            </h5>
-          </div>
-
-          <div class="card" id="CardPendentes">
-            <div class="card-body">
-              <h5 class="card-title">Nome</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-              <p class="card-text">Descriçao</p>
-            </div>
-          </div>
-          <!---->
-          <div class="card" id="CardPendentes">
-            <div class="card-body">
-              <h5 class="card-title">Nome</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-              <p class="card-text">Descriçao</p>
-            </div>
-          </div>
-          <!---->
-          <div class="card" id="CardPendentes">
-            <div class="card-body">
-              <h5 class="card-title">Nome</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Serviço</h6>
-              <p class="card-text">Descriçao</p>
-            </div>
-          </div>
-          <!---->
-        </div>
-      </div>
-    </div>
-    <!---->
-
-    <h2 id="Title2">Metricas Diárias</h2>
-    <!---->
-    <div class="container" id="ContainerProgresso">
-      <div class="row">
-        <div class="col">
-          <div class="card" id="CardProgresso">
-            <div class="card-body">
-              <div class="progress-bar-container">
-                <h3>
-                  <label id="label">Servicos Diários</label>
-                </h3>
-                <div class="progress-bar Bar">
-                  <progress id="html" min="0" max="100" value="92"></progress>
+    <section class="section-container">
+      <h2 class="mb-3">Gerenciamento de Serviços</h2>
+      <div class="row w-100">
+        <div class="col-12 col-lg-6 px-3">
+          <div class="inner-card">
+            <div class="inner-card-title mb-3">Serviços Pendentes</div>
+            <div style="height: 285px; overflow-y: scroll">
+              <!-- MOCK CARDS PENDENTES -->
+              <div class="card-pendente">
+                <div class="d-flex flex-column w-75">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>Lavegem Simples</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>02/12/23</p>
+                </div>
+                <div class="d-flex align-items-center" style="gap: 8px">
+                  <button class="btn-excluir" type="button">
+                    <i class="mdi mdi-trash-can-outline"></i>
+                  </button>
+                  <button class="btn-concluir" type="button">
+                    <i class="mdi mdi-check-bold"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-pendente">
+                <div class="d-flex flex-column w-75">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>Lavegem Completa</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>29/11/23</p>
+                </div>
+                <div class="d-flex align-items-center" style="gap: 8px">
+                  <button class="btn-excluir" type="button">
+                    <i class="mdi mdi-trash-can-outline"></i>
+                  </button>
+                  <button class="btn-concluir" type="button">
+                    <i class="mdi mdi-check-bold"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-pendente">
+                <div class="d-flex flex-column w-75">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>higienização Interna</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>29/11/23</p>
+                </div>
+                <div class="d-flex align-items-center" style="gap: 8px">
+                  <button class="btn-excluir" type="button">
+                    <i class="mdi mdi-trash-can-outline"></i>
+                  </button>
+                  <button class="btn-concluir" type="button">
+                    <i class="mdi mdi-check-bold"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-pendente">
+                <div class="d-flex flex-column w-75">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>Polimento de Pintura</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>04/12/23</p>
+                </div>
+                <div class="d-flex align-items-center" style="gap: 8px">
+                  <button class="btn-excluir" type="button">
+                    <i class="mdi mdi-trash-can-outline"></i>
+                  </button>
+                  <button class="btn-concluir" type="button">
+                    <i class="mdi mdi-check-bold"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-pendente">
+                <div class="d-flex flex-column w-75">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>Polimento de Pintura</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>05/12/23</p>
+                </div>
+                <div class="d-flex align-items-center" style="gap: 8px">
+                  <button class="btn-excluir" type="button">
+                    <i class="mdi mdi-trash-can-outline"></i>
+                  </button>
+                  <button class="btn-concluir" type="button">
+                    <i class="mdi mdi-check-bold"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-pendente">
+                <div class="d-flex flex-column w-75">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>Lavegem Completa</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>05/12/23</p>
+                </div>
+                <div class="d-flex align-items-center" style="gap: 8px">
+                  <button class="btn-excluir" type="button">
+                    <i class="mdi mdi-trash-can-outline"></i>
+                  </button>
+                  <button class="btn-concluir" type="button">
+                    <i class="mdi mdi-check-bold"></i>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card" id="CardProgresso">
-            <div class="card-body">
-              <div class="progress-bar-container">
-                <h3>
-                  <label id="label">Valores Diários</label>
-                </h3>
-                <div class="progress-bar Bar">
-                  <progress id="css" min="0" max="100" value="87"></progress>
+        <div class="col-12 col-lg-6 px-3">
+          <div class="inner-card">
+            <div class="inner-card-title mb-3">Serviços Finalizados</div>
+            <div style="height: 285px; overflow-y: scroll">
+              <!-- MOCK CARDS PENDENTES -->
+              <div class="card-pendente">
+                <div class="d-flex flex-column w-75">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>higienização Interna</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>05/20/23</p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" id="CardProgresso">
-            <div class="card-body">
-              <div class="progress-bar-container">
-                <h3>
-                  <label id="label">Lucros Diários</label>
-                </h3>
-                <div class="progress-bar Bar">
-                  <progress id="js" min="0" max="100" value="73"></progress>
+              <div class="card-pendente">
+                <div class="d-flex flex-column w-75">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>Lavegem Completa</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>25/12/23</p>
+                </div>
+              </div>
+              <div class="card-pendente">
+                <div class="d-flex flex-column w-75">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>Polimento de Pintura</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>24/11/23</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <br />
-    <br />
+    </section>
+    <section class="section-container">
+      <h2 class="mb-5">Metricas Diárias</h2>
+      <div class="container" id="ContainerProgresso">
+        <div class="row">
+          <div class="col">
+            <div class="card" id="CardProgresso">
+              <div class="card-body">
+                <div class="progress-bar-container">
+                  <h3>
+                    <label id="label">Servicos Diários</label>
+                  </h3>
+                  <div class="progress-bar Bar">
+                    <progress id="html" min="0" max="100" value="92"></progress>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" id="CardProgresso">
+              <div class="card-body">
+                <div class="progress-bar-container">
+                  <h3>
+                    <label id="label">Valores Diários</label>
+                  </h3>
+                  <div class="progress-bar Bar">
+                    <progress id="css" min="0" max="100" value="87"></progress>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" id="CardProgresso">
+              <div class="card-body">
+                <div class="progress-bar-container">
+                  <h3>
+                    <label id="label">Lucros Diários</label>
+                  </h3>
+                  <div class="progress-bar Bar">
+                    <progress id="js" min="0" max="100" value="73"></progress>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <footer class="Footer">
-      <div class="container px-4">
-        <div class="row gx-5">
-          <div class="col">
-            <img src="../Assets/LG.png" id="imgFooter" alt="" />
-          </div>
-        </div>
-      </div>
-
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <img src="../Assets/LG.png" id="imgFooter" height="200px" />
     </footer>
 
     <script
