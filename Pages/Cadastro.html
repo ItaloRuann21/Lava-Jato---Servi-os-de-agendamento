@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link href="../Style/styleCadastro.css" rel="stylesheet" />
+    <title>Cadastro</title>
+  </head>
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    var dados = {
+      nome: "",
+      email: "",
+      numero: "",
+      senha: "",
+    };
+    function showAlert(html, msg) {
+      var div = document.getElementById(html);
+      if (div.classList.contains("hidden")) div.classList.toggle("hidden");
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link href="../Style/styleCdastro.css" rel="stylesheet">
-  <title>Cadastro</title>
-</head>
-<style>
-  .hidden{
-    display: none;
-  }
-</style>
-<script>
-  var dados = {
-    nome:"",
-    email: "",
-    numero: "",
-    senha: ""
-  };
-  function showAlert(html, msg){
-    var div = document.getElementById(html);
-    if(div.classList.contains('hidden'))
-      div.classList.toggle('hidden');
+      div.innerHTML = msg;
 
-    div.innerHTML = msg;
-
-    setTimeout(function () {
-      div.classList.toggle('hidden');
-      document.location.href = "./Servico.html"
-    }, 5000);
-  }
-  function fazerRequisicao() {
+      setTimeout(function () {
+        div.classList.toggle("hidden");
+        document.location.href = "./Servico.html";
+      }, 5000);
+    }
+    function fazerRequisicao() {
       event.preventDefault();
       var dados = {
         senha: document.getElementById("nome").value,
@@ -42,91 +44,150 @@
         senha: document.getElementById("senha").value,
       };
       var configuracao = {
-        method: 'POST', // Método da solicitação (no caso, POST)
+        method: "POST", // Método da solicitação (no caso, POST)
         headers: {
-            'Content-Type': 'application/json' // Tipo de conteúdo no corpo (JSON)
+          "Content-Type": "application/json", // Tipo de conteúdo no corpo (JSON)
         },
-        body: JSON.stringify(dados) // Corpo da solicitação no formato JSON
+        body: JSON.stringify(dados), // Corpo da solicitação no formato JSON
       };
-      const onSuccess = response => {
-        localStorage['Auth'] = JSON.stringify("logado");
-        response.json().then(jsonResponse => showAlert('div-sucess', jsonResponse));
-      }
+      const onSuccess = (response) => {
+        localStorage["Auth"] = JSON.stringify("logado");
+        response
+          .json()
+          .then((jsonResponse) => showAlert("div-sucess", jsonResponse));
+      };
 
-      const onFailure = response => {
-        response.json().then(jsonResponse => showAlert('div-error', jsonResponse));
+      const onFailure = (response) => {
+        response
+          .json()
+          .then((jsonResponse) => showAlert("div-error", jsonResponse));
         return response;
-      }
+      };
 
-      fetch('http://localhost:3000/api/create', configuracao)
-          .then(response => {
-              if (!response.ok) {
-                  throw response;
-              }
-              return response; // ou response.text() se a resposta não for JSON
-          })
-          .then(onSuccess, onFailure)
-          .catch(err => { 
-            console.error(err);
-          })
-  }
-</script>
-<body class="body">
-  <nav class="navbar navbar-expand-lg " id="Nav">
-    <div class="container-fluid">
-      <a class="navbar-brand" id="Link" href="../Pages/Index.html"><img src="../Assets/logo1.png" alt=""
-          id="imgLogo"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav" id="NavLink">
-          <a class="nav-link active" id="Link" aria-current="page" href="Index.html">Home</a>
-          <a class="nav-link active" id="Link" href="Servico.html">Serviços</a>
-          <a class="nav-link active" id="Link" href="./Index.html#faleconosco">Fale Conosco</a>
+      fetch("http://localhost:3000/api/create", configuracao)
+        .then((response) => {
+          if (!response.ok) {
+            throw response;
+          }
+          return response; // ou response.text() se a resposta não for JSON
+        })
+        .then(onSuccess, onFailure)
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  </script>
+  <body class="body">
+    <nav class="navbar navbar-expand-lg" id="Nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" id="Link" href="../Pages/Index.html"
+          ><img src="../Assets/logo1.png" alt="" id="imgLogo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav" id="NavLink">
+            <a
+              class="nav-link active"
+              id="Link"
+              aria-current="page"
+              href="Index.html"
+              >Home</a
+            >
+            <a class="nav-link active" id="Link" href="Servico.html"
+              >Serviços</a
+            >
+            <a class="nav-link active" id="Link" href="./Index.html#faleconosco"
+              >Fale Conosco</a
+            >
+          </div>
+          <a class="navbar-brand" id="Link" href="../Pages/Login.html"
+            ><img src="../Assets/login.png" alt="" id="imgLogin"
+          /></a>
         </div>
-        <a class="navbar-brand" id="Link" href="../Pages/Login.html"><img src="../Assets/login.png" alt=""
-            id="imgLogin"></a>
       </div>
+    </nav>
+    <div id="div-sucess" class="alert alert-success hidden" role="alert">
+      A simple success alert—check it out!
     </div>
-  </nav>
-  <div id="div-sucess" class="alert alert-success hidden" role="alert">
-    A simple success alert—check it out!
-  </div>
-  <div id="div-error" class="alert alert-danger hidden" role="alert">
-    A simple danger alert—check it out!
-  </div>
-  <br>
-  <br>
-  <form class="row g-3 needs-validation" id="Form">
-    <div class="col-md-6" id="label">
-      <label for="nome" class="form-label">Nome</label>
-      <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite seu nome completo"
-        maxlength="20" required>
-      <br>
-      <label for="cpf" class="form-label">Número de Telefone</label>
-      <input type="number" class="form-control" name="numTelefone" id="telefone" placeholder="Ex. 79999685200"
-        maxlength="11" pattern="[0-9]{11}" required>
-      <br>
-      <label for="cpf" class="form-label">Email</label>
-      <input type="email" class="form-control" name="emaill" id="email" placeholder="Informe um e-mail" maxlength="50"
-        required>
-      <br>
-      <label for="cpf" class="form-label">Senha</label>
-      <input type="password" class="form-control" name="senha" id="senha" placeholder="Informe uma senha" maxlength="11"
-         required>
-      <br>
-      <a href="../Pages/Login.html">Faça Login</a>
+    <div id="div-error" class="alert alert-danger hidden" role="alert">
+      A simple danger alert—check it out!
     </div>
+    <br />
+    <br />
+    <form class="row g-3 needs-validation" id="Form">
+      <div class="col-md-6" id="label">
+        <label for="nome" class="form-label">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          name="nome"
+          id="nome"
+          placeholder="Digite seu nome completo"
+          maxlength="20"
+          required
+        />
+        <br />
+        <label for="cpf" class="form-label">Número de Telefone</label>
+        <input
+          type="number"
+          class="form-control"
+          name="numTelefone"
+          id="telefone"
+          placeholder="Ex. 79999685200"
+          maxlength="11"
+          pattern="[0-9]{11}"
+          required
+        />
+        <br />
+        <label for="cpf" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="emaill"
+          id="email"
+          placeholder="Informe um e-mail"
+          maxlength="50"
+          required
+        />
+        <br />
+        <label for="cpf" class="form-label">Senha</label>
+        <input
+          type="password"
+          class="form-control"
+          name="senha"
+          id="senha"
+          placeholder="Informe uma senha"
+          maxlength="11"
+          required
+        />
+        <br />
+        <a href="../Pages/Login.html">Faça Login</a>
+      </div>
 
-    <div class="col-12">
-      <button class="btn btn-outline-dark"  id="btn2" onclick="fazerRequisicao()">Cadastrar</button>
-    </div>
-  </form>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
-</body>
-
+      <div class="col-12">
+        <button
+          class="btn btn-outline-dark"
+          id="btn2"
+          onclick="fazerRequisicao()"
+        >
+          Cadastrar
+        </button>
+      </div>
+    </form>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
