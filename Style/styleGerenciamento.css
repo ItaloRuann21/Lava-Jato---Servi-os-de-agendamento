@@ -131,6 +131,7 @@
 .card-pendente {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   background-color: #fff;
   padding: 12px;
   border-radius: 5px;

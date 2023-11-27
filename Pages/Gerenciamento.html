@@ -17,8 +17,11 @@
     window.onload = () => {
       if (!localStorage.getItem("Auth")) {
         // Caso der erro para acessar a pagina logado, commentar a linha abaixo
-        // window.location.href = "../Pages/Login.html";
+        window.location.href = "../Pages/Login.html";
       }
+
+      pegarAgendamentosPendentes();
+      pegarAgendamentosFinalizados();
     };
 
     function mostrarPreview() {
@@ -54,7 +57,7 @@
           servicos.push(dados);
           window.localStorage.setItem("servicos", JSON.stringify(servicos));
         } else {
-          let servicosArry = [dadadosta];
+          let servicosArry = [dados];
           window.localStorage.setItem("servicos", JSON.stringify(servicosArry));
         }
 
@@ -62,6 +65,226 @@
         descDoServico.value = "";
         precoDoServico.value = "";
       }
+
+      alert("Serviço Adicionado");
+    }
+
+    function pegarAgendamentosPendentes() {
+      let containerCardsPendents = document.getElementById(
+        "container-card-pendent"
+      );
+
+      containerCardsPendents.innerHTML = "";
+
+      let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
+
+      for (let i = 0; i < agendamentos.length; i++) {
+        let agendamento = agendamentos[i];
+
+        let newCard = createAgendamentoCard(
+          agendamento.servico,
+          agendamento.data,
+          agendamento.horario,
+          agendamento.detalhes
+        );
+        containerCardsPendents.appendChild(newCard);
+      }
+    }
+
+    function pegarAgendamentosFinalizados() {
+      let containerCardsFinalizado = document.getElementById(
+        "container-card-finalizado"
+      );
+
+      containerCardsFinalizado.innerHTML = "";
+
+      let agendamentosFinalizados = JSON.parse(
+        localStorage.getItem("AgendamentosFinalizado")
+      );
+
+      if (!agendamentosFinalizados) return;
+
+      for (let i = 0; i < agendamentosFinalizados.length; i++) {
+        let agendamento = agendamentosFinalizados[i];
+
+        let newCard = createCardFinalizado(
+          agendamento.servico,
+          agendamento.data,
+          agendamento.horario,
+          agendamento.detalhes
+        );
+        containerCardsFinalizado.appendChild(newCard);
+      }
+    }
+
+    function createAgendamentoCard(NomeDoServico, data, horario, detalhes) {
+      let newDate = new Date(data);
+      let dataFormatada =
+        newDate.getDate() +
+        1 +
+        "/" +
+        (newDate.getMonth() + 1) +
+        "/" +
+        newDate.getYear().toString().substr(1);
+
+      let newCard = document.createElement("div");
+
+      newCard.classList.add("card-pendente");
+
+      newCard.innerHTML = `
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                  "
+                >
+                  <div class="d-flex flex-column">
+                    <label style="font-size: 0.7rem; color: #00000080"
+                      >Serviço</label
+                    >
+                    <p>${NomeDoServico}</p>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <label style="font-size: 0.7rem; color: #00000080"
+                      >Horario</label
+                    >
+                    <p>${horario}</p>
+                  </div>
+                  <div class="d-flex flex-column align-items-center">
+                    <label style="font-size: 0.7rem; color: #00000080"
+                      >Data</label
+                    >
+                    <p>${dataFormatada}</p>
+                  </div>
+                  <div class="d-flex align-items-center" style="gap: 8px">
+                    <button class="btn-excluir" type="button">
+                      <i class="mdi mdi-trash-can-outline" onclick="excluirAgendamento('${data}')"></i>
+                    </button>
+                    <button class="btn-concluir" type="button">
+                      <i class="mdi mdi-check-bold" onclick="finalizarAgendamento('${data}')"></i>
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <div class="d-flex flex-column">
+                    <label style="font-size: 0.7rem; color: #00000080"
+                      >Detalhes do Carro</label
+                    >
+                    <p>${detalhes ? detalhes : "N/A"}</p>
+                  </div>
+                </div>
+              `;
+
+      return newCard;
+    }
+
+    function createCardFinalizado(NomeDoServico, data, horario, detalhes) {
+      let newDate = new Date(data);
+      let dataFormatada =
+        newDate.getDate() +
+        1 +
+        "/" +
+        (newDate.getMonth() + 1) +
+        "/" +
+        newDate.getYear().toString().substr(1);
+      let newCard = document.createElement("div");
+
+      console.log(newDate.getDate());
+
+      newCard.classList.add("card-pendente");
+
+      newCard.innerHTML = `
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              width: 100%;
+            "
+          >
+            <div class="d-flex flex-column">
+              <label style="font-size: 0.7rem; color: #00000080"
+                >Serviço</label
+              >
+              <p>${NomeDoServico}</p>
+            </div>
+            <div class="d-flex flex-column">
+              <label style="font-size: 0.7rem; color: #00000080"
+                >Horario</label
+              >
+              <p>${horario}</p>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <label style="font-size: 0.7rem; color: #00000080"
+                >Data</label
+              >
+              <p>${dataFormatada}</p>
+            </div>
+          </div>
+          <div>
+            <div class="d-flex flex-column">
+              <label style="font-size: 0.7rem; color: #00000080"
+                >Detalhes do Carro</label
+              >
+              <p>${detalhes ? detalhes : "N/A"}</p>
+            </div>
+          </div>
+        `;
+
+      return newCard;
+    }
+
+    function retirarItemAgendamentos(data) {
+      let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
+
+      let deletedIndex = agendamentos.findIndex(
+        (agendamento) => agendamento.date === data
+      );
+
+      let agendamentoDeletado = agendamentos[deletedIndex];
+      agendamentos.splice(deletedIndex, 1);
+
+      localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+      return agendamentoDeletado;
+    }
+
+    function excluirAgendamento(data) {
+      retirarItemAgendamentos(data);
+      //Reseta Datas Reservadas
+      let dataReservadas = JSON.parse(localStorage.getItem("DatasReservadas"));
+
+      let deletedIndexData = dataReservadas.findIndex(
+        (dataReservada) => dataReservada === data
+      );
+      dataReservadas.splice(deletedIndexData, 1);
+
+      localStorage.setItem("DatasReservadas", JSON.stringify(dataReservadas));
+      pegarAgendamentosPendentes();
+    }
+
+    function finalizarAgendamento(data) {
+      console.log("AAAAAAAAAAAAAAAAAA");
+      let agendamento = retirarItemAgendamentos();
+
+      let agendamentosFinalizado = JSON.parse(
+        localStorage.getItem("AgendamentosFinalizado")
+      );
+
+      if (agendamentosFinalizado) {
+        agendamentosFinalizado.push(agendamento);
+        localStorage.setItem(
+          "AgendamentosFinalizado",
+          JSON.stringify(agendamentosFinalizado)
+        );
+      } else {
+        localStorage.setItem(
+          "AgendamentosFinalizado",
+          JSON.stringify([agendamento])
+        );
+      }
+
+      pegarAgendamentosPendentes();
+      pegarAgendamentosFinalizados();
     }
   </script>
 
@@ -136,7 +359,7 @@
         <div class="card">
           <div class="card" style="width: 18rem">
             <img
-              src="../Assets/default-image.png"
+              src="../Assets/default-image.jpg"
               class="card-img-top"
               alt="..."
             />
@@ -158,240 +381,19 @@
         <div class="col-12 col-lg-6 px-3">
           <div class="inner-card">
             <div class="inner-card-title mb-3">Serviços Pendentes</div>
-            <div style="height: 285px; overflow-y: scroll">
-              <!-- MOCK CARDS PENDENTES -->
-              <div class="card-pendente">
-                <div class="d-flex flex-column w-75">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Serviço</label
-                  >
-                  <p>Lavegem Simples</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Data</label
-                  >
-                  <p>02/12/23</p>
-                </div>
-                <div class="d-flex align-items-center" style="gap: 8px">
-                  <button class="btn-excluir" type="button">
-                    <i class="mdi mdi-trash-can-outline"></i>
-                  </button>
-                  <button class="btn-concluir" type="button">
-                    <i class="mdi mdi-check-bold"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-pendente">
-                <div class="d-flex flex-column w-75">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Serviço</label
-                  >
-                  <p>Lavegem Completa</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Data</label
-                  >
-                  <p>29/11/23</p>
-                </div>
-                <div class="d-flex align-items-center" style="gap: 8px">
-                  <button class="btn-excluir" type="button">
-                    <i class="mdi mdi-trash-can-outline"></i>
-                  </button>
-                  <button class="btn-concluir" type="button">
-                    <i class="mdi mdi-check-bold"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-pendente">
-                <div class="d-flex flex-column w-75">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Serviço</label
-                  >
-                  <p>higienização Interna</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Data</label
-                  >
-                  <p>29/11/23</p>
-                </div>
-                <div class="d-flex align-items-center" style="gap: 8px">
-                  <button class="btn-excluir" type="button">
-                    <i class="mdi mdi-trash-can-outline"></i>
-                  </button>
-                  <button class="btn-concluir" type="button">
-                    <i class="mdi mdi-check-bold"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-pendente">
-                <div class="d-flex flex-column w-75">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Serviço</label
-                  >
-                  <p>Polimento de Pintura</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Data</label
-                  >
-                  <p>04/12/23</p>
-                </div>
-                <div class="d-flex align-items-center" style="gap: 8px">
-                  <button class="btn-excluir" type="button">
-                    <i class="mdi mdi-trash-can-outline"></i>
-                  </button>
-                  <button class="btn-concluir" type="button">
-                    <i class="mdi mdi-check-bold"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-pendente">
-                <div class="d-flex flex-column w-75">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Serviço</label
-                  >
-                  <p>Polimento de Pintura</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Data</label
-                  >
-                  <p>05/12/23</p>
-                </div>
-                <div class="d-flex align-items-center" style="gap: 8px">
-                  <button class="btn-excluir" type="button">
-                    <i class="mdi mdi-trash-can-outline"></i>
-                  </button>
-                  <button class="btn-concluir" type="button">
-                    <i class="mdi mdi-check-bold"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-pendente">
-                <div class="d-flex flex-column w-75">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Serviço</label
-                  >
-                  <p>Lavegem Completa</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Data</label
-                  >
-                  <p>05/12/23</p>
-                </div>
-                <div class="d-flex align-items-center" style="gap: 8px">
-                  <button class="btn-excluir" type="button">
-                    <i class="mdi mdi-trash-can-outline"></i>
-                  </button>
-                  <button class="btn-concluir" type="button">
-                    <i class="mdi mdi-check-bold"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <div
+              id="container-card-pendent"
+              style="height: 285px; overflow-y: scroll"
+            ></div>
           </div>
         </div>
         <div class="col-12 col-lg-6 px-3">
           <div class="inner-card">
             <div class="inner-card-title mb-3">Serviços Finalizados</div>
-            <div style="height: 285px; overflow-y: scroll">
-              <!-- MOCK CARDS PENDENTES -->
-              <div class="card-pendente">
-                <div class="d-flex flex-column w-75">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Serviço</label
-                  >
-                  <p>higienização Interna</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Data</label
-                  >
-                  <p>05/20/23</p>
-                </div>
-              </div>
-              <div class="card-pendente">
-                <div class="d-flex flex-column w-75">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Serviço</label
-                  >
-                  <p>Lavegem Completa</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Data</label
-                  >
-                  <p>25/12/23</p>
-                </div>
-              </div>
-              <div class="card-pendente">
-                <div class="d-flex flex-column w-75">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Serviço</label
-                  >
-                  <p>Polimento de Pintura</p>
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                  <label style="font-size: 0.7rem; color: #00000080"
-                    >Data</label
-                  >
-                  <p>24/11/23</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="section-container">
-      <h2 class="mb-5">Metricas Diárias</h2>
-      <div class="container" id="ContainerProgresso">
-        <div class="row">
-          <div class="col">
-            <div class="card" id="CardProgresso">
-              <div class="card-body">
-                <div class="progress-bar-container">
-                  <h3>
-                    <label id="label">Servicos Diários</label>
-                  </h3>
-                  <div class="progress-bar Bar">
-                    <progress id="html" min="0" max="100" value="92"></progress>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card" id="CardProgresso">
-              <div class="card-body">
-                <div class="progress-bar-container">
-                  <h3>
-                    <label id="label">Valores Diários</label>
-                  </h3>
-                  <div class="progress-bar Bar">
-                    <progress id="css" min="0" max="100" value="87"></progress>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card" id="CardProgresso">
-              <div class="card-body">
-                <div class="progress-bar-container">
-                  <h3>
-                    <label id="label">Lucros Diários</label>
-                  </h3>
-                  <div class="progress-bar Bar">
-                    <progress id="js" min="0" max="100" value="73"></progress>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div
+              id="container-card-finalizado"
+              style="height: 285px; overflow-y: scroll"
+            ></div>
           </div>
         </div>
       </div>

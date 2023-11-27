@@ -1,56 +1,95 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link href="../Style/styleAgendamento.css" rel="stylesheet" />
+    <title>Agendamento</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link href="../Style/styleAgendamento.css" rel="stylesheet">
-  <title>Agendamento</title>
-</head>
+  <script>
+    const tipoServico = localStorage.getItem("Servico");
+    const precoServico = localStorage.getItem("PrecoServico");
+    window.data = "";
+    window.hora = "";
 
-<script>
-  const tipoServico = localStorage.getItem('Servico');
-  const precoServico = localStorage.getItem('PrecoServico')
-  window.data = '';
-  window.hora = '';
+    window.onload = function () {
+      if (!localStorage["Auth"]) {
+        document.location.href = "./Login.html";
+        return;
+      }
 
-  window.onload = function () {
+      document.getElementById("header-servico").textContent = tipoServico;
+      document.getElementById("valor-servico").value = precoServico;
+      document
+        .getElementById("data")
+        .setAttribute("min", new Date().toISOString().split("T")[0]);
+    };
 
-    if (!localStorage['Auth']) {
-      document.location.href = './Login.html'
-      return;
+    function Agendar(nomeServico) {
+      let agendamentosStr = "agendamentos";
+      let dataReservadasStr = "DatasReservadas";
+
+      // Pegando dados
+      let data = document.getElementById("data").value;
+      let horario = document.getElementById("time").value;
+      let detalhes = document.getElementById("detalhes-carro").value;
+
+      //Validar Data
+      let datasReservadas = JSON.parse(localStorage.getItem(dataReservadasStr));
+      if (datasReservadas) {
+        let existeData = !!datasReservadas.find(
+          (dataReservada) => dataReservada === data
+        );
+        if (existeData) {
+          alert("JA EXISTE RESERVA");
+          return;
+        }
+      }
+      if (!(!!data && !!horario)) {
+        alert("PREENCHA TODOS OS CAMPOS OBRIGATORIOS");
+        return;
+      }
+
+      let dados = {
+        servico: tipoServico,
+        data: data,
+        horario: horario,
+        preco: precoServico,
+        detalhes: detalhes,
+      };
+
+      // Armazenando no Local Storage
+      let agendamentos = JSON.parse(localStorage.getItem(agendamentosStr));
+
+      if (agendamentos) {
+        agendamentos.push(dados);
+        localStorage.setItem(agendamentosStr, JSON.stringify(agendamentos));
+      } else {
+        localStorage.setItem(agendamentosStr, JSON.stringify([dados]));
+      }
+
+      // Reservar Data
+      if (datasReservadas) {
+        datasReservadas.push(data);
+
+        localStorage.setItem(
+          dataReservadasStr,
+          JSON.stringify(datasReservadas)
+        );
+      } else {
+        localStorage.setItem(dataReservadasStr, JSON.stringify([data]));
+      }
+
+      alert("Serviço Agendado");
+      window.location.href = "./Servico.html";
     }
-
-    document.getElementById("header-servico").textContent = tipoServico;
-    document.getElementById('valor-servico').value = precoServico;
-    document.getElementById("data").setAttribute('min', new Date().toISOString().split('T')[0]);
-  }
-
-
-  function Agendar(nomeServico) {
-
-    let data = document.getElementById('data').value;
-    let horario = document.getElementById('time').value
-
-    let dados = {
-      servico:tipoServico,
-      data:data,
-      horario:horario,
-      preco:precoServico,
-    }
-
-    let agendamentos = JSON.parse(window.localStorage.getItem('agendamentos'))
-
-    if(agendamentos){
-      agendamentos.push(dados);
-      window.localStorage.setItem('agendamentos',JSON.stringify(agendamentos));
-    }
-    else{
-      window.localStorage.setItem('agendamentos',JSON.stringify([dados]))
-    }
-  }
 
     // if (tipoServico && window.data && window.hora) {
     //   // Use && em vez de &
@@ -66,70 +105,96 @@
     // } else {
     //   console.log("Dados necessários não estão definidos no localStorage.")
     // }
-</script>
+  </script>
 
-<body class="body">
-  <nav class="navbar navbar-expand-lg " id="Nav">
-    <div class="container-fluid">
-      <a class="navbar-brand" id="Link" href="../Pages/Index.html"><img src="../Assets/logo1.png" alt=""
-          id="imgLogo"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav" id="NavLink">
-          <a class="nav-link active" id="Link" aria-current="page" href="Index.html">Home</a>
-          <a class="nav-link active" id="Link" href="Servico.html">Serviços</a>
-          <a class="nav-link active" id="Link" href="./Index.html#faleconosco">Fale Conosco</a>
-        </div>
-        <a class="navbar-brand" id="Link" href="#"><img src="../Assets/logout2.png" alt="Logout" id="logoutBtn"></a>
-      </div>
-    </div>
-  </nav>
-  <br>
-  <br>
-  <h2 id="Title1">Agende seu Serviço</h2>
-  <div class="container overflow-hidden text-center">
-    <div class="row gx-5">
-      <div class="col">
-        <div class="p-3">
-          <form class="row g-3 needs-validation" id="Form">
-            <div class="col-md-6" id="label">
-              <label for="nome" class="form-label">Data</label>
-              <input type="date" class="form-control" name="data" id="data" min=""
-                required>
-              <br>
-              <label class="form-label">Horas</label>
-              <select class="form-select" id="time" required>
-                <option value="">Selecione um horário</option>
-                <option value="8:00">8:00</option>
-                <option value="8:30">8:30</option>
-                <option value="9:00">9:00</option>
-                <option value="9:30">9:30</option>
-                <option value="10:00">10:00</option>
-                <option value="10:30">10:30</option>
-                <option value="11:00">11:00</option>
-                <option value="13:00">13:00</option>
-                <option value="13:30">13:30</option>
-                <option value="14:00">14:00</option>
-                <option value="14:30">14:30</option>
-                <option value="15:00">15:00</option>
-                <option value="15:30">15:30</option>
-                <option value="16:00">16:00</option>
-                <option value="16:30">16:30</option>
-              </select>
-              <br>
-            </div>
-          </form>
+  <body class="body">
+    <nav class="navbar navbar-expand-lg" id="Nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" id="Link" href="../Pages/Index.html"
+          ><img src="../Assets/logo1.png" alt="" id="imgLogo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav" id="NavLink">
+            <a
+              class="nav-link active"
+              id="Link"
+              aria-current="page"
+              href="Index.html"
+              >Home</a
+            >
+            <a class="nav-link active" id="Link" href="Servico.html"
+              >Serviços</a
+            >
+            <a class="nav-link active" id="Link" href="./Index.html#faleconosco"
+              >Fale Conosco</a
+            >
+          </div>
+          <a class="navbar-brand" id="Link" href="#"
+            ><img src="../Assets/logout2.png" alt="Logout" id="logoutBtn"
+          /></a>
         </div>
       </div>
-      <div class="col">
-        <div class="p-3">
-          <div class="card" id="Form2">
-            <h5 class="card-header" id="header-servico"></h5>
-            <div class="card-body">
-              <!-- <label for="tipo-servico" class="form-label">Tipo de serviço</label>
+    </nav>
+    <br />
+    <br />
+    <h2 id="Title1">Agende seu Serviço</h2>
+    <div class="container overflow-hidden text-center">
+      <div class="row gx-5">
+        <div class="col">
+          <div class="p-3">
+            <form class="row g-3 needs-validation" id="Form">
+              <div class="col-md-6" id="label">
+                <label for="nome" class="form-label">Data</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  name="data"
+                  id="data"
+                  min=""
+                  required
+                />
+                <br />
+                <label class="form-label">Horas</label>
+                <select class="form-select" id="time" required>
+                  <option value="">Selecione um horário</option>
+                  <option value="8:00">8:00</option>
+                  <option value="8:30">8:30</option>
+                  <option value="9:00">9:00</option>
+                  <option value="9:30">9:30</option>
+                  <option value="10:00">10:00</option>
+                  <option value="10:30">10:30</option>
+                  <option value="11:00">11:00</option>
+                  <option value="13:00">13:00</option>
+                  <option value="13:30">13:30</option>
+                  <option value="14:00">14:00</option>
+                  <option value="14:30">14:30</option>
+                  <option value="15:00">15:00</option>
+                  <option value="15:30">15:30</option>
+                  <option value="16:00">16:00</option>
+                  <option value="16:30">16:30</option>
+                </select>
+                <br />
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col">
+          <div class="p-3">
+            <div class="card" id="Form2">
+              <h5 class="card-header" id="header-servico"></h5>
+              <div class="card-body">
+                <!-- <label for="tipo-servico" class="form-label">Tipo de serviço</label>
               <select class="form-select mb-3" id="tipo-servico" required>
                 <option value="">Selecione o tipo de serviço</option>
                 <option value="Lavagem externa">Lavagem externa</option>
@@ -137,30 +202,49 @@
                 <option value="Polimento">Polimento</option>
               </select> -->
 
+                <label for="detalhes-carro" class="form-label"
+                  >Detalhes adicionais do carro</label
+                >
+                <textarea
+                  class="form-control mb-3"
+                  id="detalhes-carro"
+                  rows="3"
+                  placeholder="Descreva detalhes específicos sobre o carro"
+                ></textarea>
 
-              <label for="detalhes-carro" class="form-label">Detalhes adicionais do carro</label>
-              <textarea class="form-control mb-3" id="detalhes-carro" rows="3"
-                placeholder="Descreva detalhes específicos sobre o carro"></textarea>
+                <label for="valor-servico" class="form-label"
+                  >Valor do serviço</label
+                >
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="valor-prefixo">R$</span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="100"
+                    id="valor-servico"
+                    disabled
+                  />
+                </div>
 
-              <label for="valor-servico" class="form-label">Valor do serviço</label>
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="valor-prefixo">R$</span>
-                <input type="text" class="form-control" placeholder="100" id="valor-servico" disabled>
+                <a
+                  target="_blank"
+                  class="btn btn-primary"
+                  id="btn3"
+                  onclick="Agendar()"
+                  >Agendar</a
+                >
               </div>
-
-              <a target="_blank" class="btn btn-primary" id="btn3" onclick="Agendar()">Agendar</a>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
     <script src="../utils/logout.js"></script>
-</body>
-
+  </body>
 </html>
