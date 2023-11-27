@@ -17,7 +17,7 @@
     window.onload = () => {
       if (!localStorage.getItem("Auth")) {
         // Caso der erro para acessar a pagina logado, commentar a linha abaixo
-        window.location.href = "../Pages/Login.html";
+        // window.location.href = "../Pages/Login.html";
       }
     };
 
@@ -34,6 +34,34 @@
     function logout() {
       debugger;
       localStorage.removeItem("Auth");
+    }
+
+    function addServico() {
+      let nomeDoServico = document.getElementById("nome-servico");
+      let descDoServico = document.getElementById("desc-servico");
+      let precoDoServico = document.getElementById("preco-servico");
+
+      if (nomeDoServico.value && descDoServico.value && precoDoServico.value) {
+        let dados = {
+          nome: nomeDoServico.value,
+          desc: descDoServico.value,
+          preco: precoDoServico.value,
+        };
+
+        let servicos = JSON.parse(window.localStorage.getItem("servicos"));
+
+        if (servicos) {
+          servicos.push(dados);
+          window.localStorage.setItem("servicos", JSON.stringify(servicos));
+        } else {
+          let servicosArry = [dadadosta];
+          window.localStorage.setItem("servicos", JSON.stringify(servicosArry));
+        }
+
+        nomeDoServico.value = "";
+        descDoServico.value = "";
+        precoDoServico.value = "";
+      }
     }
   </script>
 
@@ -84,7 +112,12 @@
               <label class="form-label">Preço</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="valor-prefixo">R$</span>
-                <input type="number" class="form-control" placeholder="100" />
+                <input
+                  type="number"
+                  id="preco-servico"
+                  class="form-control"
+                  placeholder="100"
+                />
               </div>
             </div>
           </div>
@@ -95,13 +128,15 @@
             <button class="btn btn-primary" onclick="mostrarPreview()">
               Preview
             </button>
-            <button class="btn btn-primary">Criar Serviço</button>
+            <button class="btn btn-primary" onclick="addServico()">
+              Criar Serviço
+            </button>
           </div>
         </div>
         <div class="card">
           <div class="card" style="width: 18rem">
             <img
-              src="../Assets/default-image.jpg"
+              src="../Assets/default-image.png"
               class="card-img-top"
               alt="..."
             />
@@ -118,7 +153,7 @@
     </section>
 
     <section class="section-container">
-      <h2 class="mb-3">Gerenciamento de Serviços</h2>
+      <h2 class="mb-3">Gerenciamento de Agendamentos</h2>
       <div class="row w-100">
         <div class="col-12 col-lg-6 px-3">
           <div class="inner-card">

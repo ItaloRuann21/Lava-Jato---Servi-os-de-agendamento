@@ -17,132 +17,55 @@
   window.hora = '';
 
   window.onload = function () {
-    document.getElementById("header-servico").textContent = tipoServico;
-    document.getElementById('valor-servico').value = precoServico;
-    document.getElementById("data").setAttribute('min', new Date().toISOString().split('T')[0]);
 
-    desabilitarDatasReservadas();
-  }
-
-  function bloquearData() {
-    const dataSelecionada = new Date(document.getElementById("data").value);
-    const inputHora = document.getElementById("time");
-    const horasDisponiveis = ['8:00', '8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
-
-    const hoje = new Date(); // Data atual
-    hoje.setHours(0, 0, 0, 0); // Define para a meia-noite
-
-    const dataEscolhida = new Date(dataSelecionada);
-    dataEscolhida.setHours(0, 0, 0, 0); // Define para a meia-noite
-
-    if (dataEscolhida < hoje) {
-      document.getElementById("data").value = '';
-      alert("Escolha uma data futura.");
-      return;
-    }
-
-    document.getElementById("data").setAttribute('min', hoje.toISOString().split('T')[0]);
-
-    const reservasSalvas = localStorage.getItem('DatasReservadas');
-    const datasReservadas = reservasSalvas ? JSON.parse(reservasSalvas) : [];
-
-    if (datasReservadas.includes(dataSelecionada.toISOString().split('T')[0])) {
-      alert("Essa data já foi reservada.");
-      document.getElementById("data").value = ''; // Limpa a seleção da data
-      return;
-    } else {
-      datasReservadas.push(dataSelecionada.toISOString().split('T')[0]);
-      localStorage.setItem('DatasReservadas', JSON.stringify(datasReservadas));
-    }
-
-    inputHora.innerHTML = '';
-    horasDisponiveis.forEach(hora => {
-      const option = document.createElement('option');
-      option.text = hora;
-      inputHora.add(option);
-    });
-
-    if (dataEscolhida.getTime() === hoje.getTime()) {
-      const horaAtual = new Date().getHours();
-      for (let i = 0; i < horasDisponiveis.length; i++) {
-        const hora = parseInt(horasDisponiveis[i].split(':')[0]);
-        if (hora < horaAtual) {
-          inputHora.remove(0);
-        } else {
-          break;
-        }
-      }
-    }
-  }
-
-  function atualizarInformacoes() {
-    bloquearData();
-    var date = new Date(document.getElementById("data").value);
-    date.setHours(date.getHours() - 3);
-
-    var dd = String(date.getDate() + 1).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0');
-    var yyyy = date.getFullYear();
-
-    window.data = today = dd + '/' + mm + '/' + yyyy;
-    document.getElementById('service-data').textContent = window.data;
-
-    window.hora = document.getElementById("time").value;
-    document.getElementById('service-hora').textContent = window.hora;
-  }
-  function Agendar(nomeServico) {
-    event.preventDefault();
     if (!localStorage['Auth']) {
       document.location.href = './Login.html'
       return;
     }
 
-    function atualizarHoras() {
-      const inputHora = document.getElementById("time");
-      const horaSelecionada = new Date(document.getElementById("data").value);
-      const horaAtual = new Date();
+    document.getElementById("header-servico").textContent = tipoServico;
+    document.getElementById('valor-servico').value = precoServico;
+    document.getElementById("data").setAttribute('min', new Date().toISOString().split('T')[0]);
+  }
 
-      const horasDisponiveis = [];
 
-      // Lógica para calcular as horas disponíveis
-      if (horaSelecionada.toDateString() === horaAtual.toDateString()) {
-        const hora = horaAtual.getHours();
-        const minutos = horaAtual.getMinutes();
+  function Agendar(nomeServico) {
 
-        for (let i = hora + 1; i <= 17; i++) {
-          const horaFormatada = `${i.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
-          horasDisponiveis.push(horaFormatada);
-        }
-      } else {
-        for (let i = 8; i <= 17; i++) {
-          const horaFormatada = `${i.toString().padStart(2, '0')}:00`;
-          horasDisponiveis.push(horaFormatada);
-        }
-      }
+    let data = document.getElementById('data').value;
+    let horario = document.getElementById('time').value
 
-      inputHora.innerHTML = '';
-      horasDisponiveis.forEach(hora => {
-        const option = document.createElement('option');
-        option.text = hora;
-        inputHora.add(option);
-      });
+    let dados = {
+      servico:tipoServico,
+      data:data,
+      horario:horario,
+      preco:precoServico,
     }
 
-    if (tipoServico && window.data && window.hora) {
-      // Use && em vez de &
-      const mensagemPreSelecionada = `Olá, eu quero agendar meu serviço:\n*Tipo de serviço:* ${tipoServico}\n*Data marcada:* ${window.data}\n*Horário marcado:* ${window.hora}`
+    let agendamentos = JSON.parse(window.localStorage.getItem('agendamentos'))
 
-      // Substitua o número de telefone abaixo pelo número correto
-      const numeroTelefone = "557999506852"
-
-      const mensagemCodificada = encodeURIComponent(mensagemPreSelecionada)
-
-      const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefone}&text="${mensagemCodificada}"`
-      var w1 = window.open(linkWhatsApp, '_blank').focus();
-    } else {
-      console.log("Dados necessários não estão definidos no localStorage.")
+    if(agendamentos){
+      agendamentos.push(dados);
+      window.localStorage.setItem('agendamentos',JSON.stringify(agendamentos));
+    }
+    else{
+      window.localStorage.setItem('agendamentos',JSON.stringify([dados]))
     }
   }
+
+    // if (tipoServico && window.data && window.hora) {
+    //   // Use && em vez de &
+    //   const mensagemPreSelecionada = `Olá, eu quero agendar meu serviço:\n*Tipo de serviço:* ${tipoServico}\n*Data marcada:* ${window.data}\n*Horário marcado:* ${window.hora}`
+
+    //   // Substitua o número de telefone abaixo pelo número correto
+    //   const numeroTelefone = "557999506852"
+
+    //   const mensagemCodificada = encodeURIComponent(mensagemPreSelecionada)
+
+    //   const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefone}&text="${mensagemCodificada}"`
+    //   var w1 = window.open(linkWhatsApp, '_blank').focus();
+    // } else {
+    //   console.log("Dados necessários não estão definidos no localStorage.")
+    // }
 </script>
 
 <body class="body">
@@ -174,12 +97,27 @@
           <form class="row g-3 needs-validation" id="Form">
             <div class="col-md-6" id="label">
               <label for="nome" class="form-label">Data</label>
-              <input type="date" onchange="atualizarInformacoes()" class="form-control" name="data" id="data" min=""
+              <input type="date" class="form-control" name="data" id="data" min=""
                 required>
               <br>
-              <label for="cpf" class="form-label">Horas</label>
-              <select class="form-select" onchange="atualizarHoras()" id="time" required>
+              <label class="form-label">Horas</label>
+              <select class="form-select" id="time" required>
                 <option value="">Selecione um horário</option>
+                <option value="8:00">8:00</option>
+                <option value="8:30">8:30</option>
+                <option value="9:00">9:00</option>
+                <option value="9:30">9:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
               </select>
               <br>
             </div>

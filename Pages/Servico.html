@@ -13,6 +13,10 @@
     <title>Serviços</title>
   </head>
   <script>
+    window.onload = () => {
+      addServicos();
+    };
+
     function Agendar(nomeServico, precoServico) {
       event.preventDefault();
       if (!localStorage["Auth"]) {
@@ -22,6 +26,54 @@
       document.location.href = "./Agendamento.html";
       localStorage["Servico"] = nomeServico;
       localStorage["PrecoServico"] = precoServico;
+    }
+
+    function createCard(nome, desc, preco) {
+      let newCard = document.createElement("div");
+
+      let randomImg = "i" + parseInt(Math.random() * 9);
+
+      newCard.classList.add("col-12", "col-lg-4");
+
+      newCard.innerHTML = `
+            <div class="card">
+              <img
+                src="../Assets/servicos/${randomImg}.png"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">${nome}</h5>
+                <p class="card-text">
+                  ${desc}
+                </p>
+                <a
+                  href="../Pages/Agendamento.html"
+                  onclick="Agendar('${nome}', ${preco})"
+                  class="btn btn-primary"
+                  id="Btn"
+                  >Agendar</a
+                >
+              </div>
+            </div>`;
+
+      return newCard;
+    }
+
+    function addServicos() {
+      let containerServico = document.getElementById("container-servicos");
+      let servicosCards = JSON.parse(window.localStorage.getItem("servicos"));
+
+      for (let i = 0; i < servicosCards.length; i++) {
+        let novoServico = servicosCards[i];
+        let newCard = createCard(
+          novoServico.nome,
+          novoServico.desc,
+          novoServico.preco
+        );
+
+        containerServico.appendChild(newCard);
+      }
     }
   </script>
 
@@ -71,10 +123,13 @@
       <h2 id="Title2">Serviços</h2>
       <br />
       <br />
+
+      <div></div>
+
       <div class="container text-center">
-        <div class="row align-items-center" id="Col">
-          <div class="col">
-            <div class="card" style="width: 18rem">
+        <div id="container-servicos" class="row align-items-center">
+          <div class="col-12 col-lg-4">
+            <div class="card">
               <img
                 src="../Assets/servicos/i1.png"
                 class="card-img-top"
@@ -96,8 +151,8 @@
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="card" style="width: 18rem">
+          <div class="col-12 col-lg-4">
+            <div class="card">
               <img
                 src="../Assets/servicos/i3.png"
                 class="card-img-top"
@@ -118,10 +173,10 @@
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="card" style="width: 18rem">
+          <div class="col-12 col-lg-4">
+            <div class="card">
               <img
-                src="../Assets/servicos/i5.jpg"
+                src="../Assets/servicos/i5.png"
                 class="card-img-top"
                 alt="..."
               />
@@ -141,16 +196,8 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <!---->
-      <br />
-      <br />
-
-      <div class="container text-center">
-        <div class="row align-items-center" id="Col">
-          <div class="col">
-            <div class="card" style="width: 18rem">
+          <div class="col-12 col-lg-4">
+            <div class="card">
               <img
                 src="../Assets/servicos/i4.png"
                 class="card-img-top"
@@ -172,10 +219,10 @@
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="card" style="width: 18rem">
+          <div class="col-12 col-lg-4">
+            <div class="card">
               <img
-                src="../Assets/servicos/i9.png"
+                src="../Assets/servicos/i0.png"
                 class="card-img-top"
                 alt="..."
               />
@@ -195,10 +242,10 @@
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="card" style="width: 18rem">
+          <div class="col-12 col-lg-4">
+            <div class="card">
               <img
-                src="../Assets/servicos/i8.jpeg"
+                src="../Assets/servicos/i8.png"
                 class="card-img-top"
                 alt="..."
               />
