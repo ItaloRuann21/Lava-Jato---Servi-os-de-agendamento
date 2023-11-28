@@ -5,6 +5,17 @@
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
 
+.body {
+  background-image: url(../Assets/ServiceBanner.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Opcional: fixa a imagem no lugar enquanto a página é rolada */
+  max-width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 #Nav {
   background-color: #000000;
 }
