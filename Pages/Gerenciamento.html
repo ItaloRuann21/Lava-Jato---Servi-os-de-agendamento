@@ -322,7 +322,7 @@
       let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
 
       let deletedIndex = agendamentos.findIndex(
-        (agendamento) => agendamento.date === data
+        (agendamento) => agendamento.data === data
       );
 
       let agendamentoDeletado = agendamentos[deletedIndex];
