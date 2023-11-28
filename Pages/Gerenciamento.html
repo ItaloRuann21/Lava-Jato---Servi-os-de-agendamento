@@ -130,27 +130,27 @@
       newCard.classList.add("col-12", "col-lg-6", "p-1");
 
       newCard.innerHTML = `
-            <div class="card p-2">
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                "
-              >
-                <div>
-                  <label class="service-name">Nome do Serviço</label>
-                  <p>${name}</p>
-                </div>
-                <div>
-                  <label class="service-name">Preço</label>
-                  <p>R$${price}</p>
-                </div>
-                <button class="btn-excluir" onclick="apagarServico('${name}')">
-                  <i  class="mdi mdi-trash-can-outline"></i>
-                </button>
-              </div>
-            </div>`;
+                <div class="card p-2">
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                    "
+                  >
+                    <div>
+                      <label class="service-name">Nome do Serviço</label>
+                      <p>${name}</p>
+                    </div>
+                    <div>
+                      <label class="service-name">Preço</label>
+                      <p>R$${price}</p>
+                    </div>
+                    <button class="btn-excluir" onclick="apagarServico('${name}')">
+                      <i  class="mdi mdi-trash-can-outline"></i>
+                    </button>
+                  </div>
+                </div>`;
 
       return newCard;
     }
@@ -218,49 +218,49 @@
       newCard.classList.add("card-pendente");
 
       newCard.innerHTML = `
-                <div
-                  style="
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                  "
-                >
-                  <div class="d-flex flex-column">
-                    <label style="font-size: 0.7rem; color: #00000080"
-                      >Serviço</label
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
                     >
-                    <p>${NomeDoServico}</p>
-                  </div>
-                  <div class="d-flex flex-column">
-                    <label style="font-size: 0.7rem; color: #00000080"
-                      >Horario</label
-                    >
-                    <p>${horario}</p>
-                  </div>
-                  <div class="d-flex flex-column align-items-center">
-                    <label style="font-size: 0.7rem; color: #00000080"
-                      >Data</label
-                    >
-                    <p>${dataFormatada}</p>
-                  </div>
-                  <div class="d-flex align-items-center" style="gap: 8px">
-                    <button class="btn-excluir" type="button">
-                      <i class="mdi mdi-trash-can-outline" onclick="excluirAgendamento('${data}')"></i>
-                    </button>
-                    <button class="btn-concluir" type="button">
-                      <i class="mdi mdi-check-bold" onclick="finalizarAgendamento('${data}')"></i>
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <div class="d-flex flex-column">
-                    <label style="font-size: 0.7rem; color: #00000080"
-                      >Detalhes do Carro</label
-                    >
-                    <p>${detalhes ? detalhes : "N/A"}</p>
-                  </div>
-                </div>
-              `;
+                      <div class="d-flex flex-column">
+                        <label style="font-size: 0.7rem; color: #00000080"
+                          >Serviço</label
+                        >
+                        <p>${NomeDoServico}</p>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <label style="font-size: 0.7rem; color: #00000080"
+                          >Horario</label
+                        >
+                        <p>${horario}</p>
+                      </div>
+                      <div class="d-flex flex-column align-items-center">
+                        <label style="font-size: 0.7rem; color: #00000080"
+                          >Data</label
+                        >
+                        <p>${dataFormatada}</p>
+                      </div>
+                      <div class="d-flex align-items-center" style="gap: 8px">
+                        <button class="btn-excluir" type="button">
+                          <i class="mdi mdi-trash-can-outline" onclick="excluirAgendamento('${data}')"></i>
+                        </button>
+                        <button class="btn-concluir" type="button">
+                          <i class="mdi mdi-check-bold" onclick="finalizarAgendamento('${data}')"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="d-flex flex-column">
+                        <label style="font-size: 0.7rem; color: #00000080"
+                          >Detalhes do Carro</label
+                        >
+                        <p>${detalhes ? detalhes : "N/A"}</p>
+                      </div>
+                    </div>
+                  `;
 
       return newCard;
     }
@@ -279,41 +279,41 @@
       newCard.classList.add("card-pendente");
 
       newCard.innerHTML = `
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              width: 100%;
-            "
-          >
-            <div class="d-flex flex-column">
-              <label style="font-size: 0.7rem; color: #00000080"
-                >Serviço</label
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  width: 100%;
+                "
               >
-              <p>${NomeDoServico}</p>
-            </div>
-            <div class="d-flex flex-column">
-              <label style="font-size: 0.7rem; color: #00000080"
-                >Horario</label
-              >
-              <p>${horario}</p>
-            </div>
-            <div class="d-flex flex-column align-items-center">
-              <label style="font-size: 0.7rem; color: #00000080"
-                >Data</label
-              >
-              <p>${dataFormatada}</p>
-            </div>
-          </div>
-          <div>
-            <div class="d-flex flex-column">
-              <label style="font-size: 0.7rem; color: #00000080"
-                >Detalhes do Carro</label
-              >
-              <p>${detalhes ? detalhes : "N/A"}</p>
-            </div>
-          </div>
-        `;
+                <div class="d-flex flex-column">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Serviço</label
+                  >
+                  <p>${NomeDoServico}</p>
+                </div>
+                <div class="d-flex flex-column">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Horario</label
+                  >
+                  <p>${horario}</p>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Data</label
+                  >
+                  <p>${dataFormatada}</p>
+                </div>
+              </div>
+              <div>
+                <div class="d-flex flex-column">
+                  <label style="font-size: 0.7rem; color: #00000080"
+                    >Detalhes do Carro</label
+                  >
+                  <p>${detalhes ? detalhes : "N/A"}</p>
+                </div>
+              </div>
+            `;
 
       return newCard;
     }
@@ -431,7 +431,8 @@
         <div class="card">
           <div class="card" style="width: 18rem">
             <img
-              src="../Assets/default-image.jpg"
+              id="preview-img"
+              src="../Assets/servicos/i0.png"
               class="card-img-top"
               alt="..."
             />
