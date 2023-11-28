@@ -64,6 +64,8 @@
       let data = document.getElementById("data").value;
       let horario = document.getElementById("time").value;
       let detalhes = document.getElementById("detalhes-carro").value;
+      let responsavel = document.getElementById("responsavel").value;
+      let telefone = document.getElementById("telefone").value;
 
       //Validar Data
       let datasReservadas = JSON.parse(localStorage.getItem(dataReservadasStr));
@@ -76,7 +78,7 @@
           return;
         }
       }
-      if (!(!!data && !!horario)) {
+      if (!(!!data && !!horario && !!responsavel & !!telefone)) {
         alert("PREENCHA TODOS OS CAMPOS OBRIGATORIOS");
         return;
       }
@@ -87,6 +89,8 @@
         horario: horario,
         preco: precoServico,
         detalhes: detalhes,
+        responsavel: responsavel,
+        telefone: telefone,
       };
 
       // Armazenando no Local Storage
@@ -187,6 +191,24 @@
                   <option value="16:00">16:00</option>
                   <option value="16:30">16:30</option>
                 </select>
+                <br />
+                <label for="">Responsavel do Carro</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="responsavel"
+                  placeholder="Digite o nome do responsavel"
+                  required
+                />
+                <br />
+                <label for="">Telefone</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="telefone"
+                  required
+                  placeholder="(19) 99999-9999"
+                />
                 <br />
               </div>
             </form>
