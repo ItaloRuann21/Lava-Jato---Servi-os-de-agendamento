@@ -333,7 +333,7 @@
                   <p>${dataFormatada}</p>
                 </div>
               </div>
-              <div>
+              <div class="d-flex justify-content-between">
                 <div class="d-flex flex-column">
                   <label style="font-size: 0.7rem; color: #00000080"
                     >Detalhes do Carro</label
@@ -387,7 +387,9 @@
     }
 
     function finalizarAgendamento(data) {
-      let agendamento = retirarItemAgendamentos();
+      let agendamento = retirarItemAgendamentos(data);
+
+      console.log(agendamento);
 
       let agendamentosFinalizado = JSON.parse(
         localStorage.getItem("AgendamentosFinalizado")
