@@ -387,7 +387,7 @@
     }
 
     function finalizarAgendamento(data) {
-      let agendamento = retirarItemAgendamentos();
+      let agendamento = retirarItemAgendamentos(data);
 
       let agendamentosFinalizado = JSON.parse(
         localStorage.getItem("AgendamentosFinalizado")
