@@ -1,135 +1,132 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-      crossorigin="anonymous"
-    />
-    <link href="../Style/styleGerenciamento.css" rel="stylesheet" />
-    <title>Lava Jato</title>
-  </head>
 
-  <script>
-    window.onload = () => {
-      let isAdmin = localStorage.getItem("Auth") === "gestor";
-      let isUser = localStorage.getItem("Auth") === "user";
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+  <link href="../Style/styleGerenciamento.css" rel="stylesheet" />
+  <title>Lava Jato</title>
+</head>
 
-      if (isAdmin) {
-        let navOptions = document.getElementById("nav-options");
-        let newOption = document.createElement("li");
-        newOption.innerHTML = `<a href="Gerenciamento.html">Gerenciamento</a>`;
-        navOptions.appendChild(newOption);
-      }
+<script>
+  window.onload = () => {
+    let isAdmin = localStorage.getItem("Auth") === "gestor";
+    let isUser = localStorage.getItem("Auth") === "user";
 
-      if (isUser) {
-        window.location.href = "Login.html";
-      }
-
-      if (isAdmin || isUser) {
-        let logoutHref = document.getElementById("logout");
-        let logoutIcon = document.createElement("div");
-        logoutIcon.classList.add("mdi", "mdi-logout");
-
-        logoutIcon.onclick = logout;
-        logoutHref.appendChild(logoutIcon);
-      }
-
-      if (!localStorage.getItem("Auth")) {
-        // Caso der erro para acessar a pagina logado, comentar a linha abaixo
-        window.location.href = "../Pages/Login.html";
-      }
-
-      pegarAgendamentosPendentes();
-      pegarAgendamentosFinalizados();
-      pegarServicos();
-    };
-
-    function mostrarPreview() {
-      let nomeDoServico = document.getElementById("nome-servico").value;
-      let descDoServico = document.getElementById("desc-servico").value;
-
-      if (nomeDoServico && descDoServico) {
-        document.getElementById("preview-title").innerHTML = nomeDoServico;
-        document.getElementById("preview-desc").innerHTML = descDoServico;
-      }
+    if (isAdmin) {
+      let navOptions = document.getElementById("nav-options");
+      let newOption = document.createElement("li");
+      newOption.innerHTML = `<a href="Gerenciamento.html">Gerenciamento</a>`;
+      navOptions.appendChild(newOption);
     }
 
-    function logout() {
-      localStorage.removeItem("Auth");
+    if (isUser) {
       window.location.href = "Login.html";
     }
 
-    function pegarServicos() {
-      let availableServices = document.getElementById("service-container");
-      availableServices.innerHTML = "";
+    if (isAdmin || isUser) {
+      let logoutHref = document.getElementById("logout");
+      let logoutIcon = document.createElement("div");
+      logoutIcon.classList.add("mdi", "mdi-logout");
 
-      let services = JSON.parse(localStorage.getItem("servicos"));
-
-      if (!services) return;
-
-      for (let i = 0; i < services.length; i++) {
-        let service = services[i];
-
-        let newCard = createServiceCard(service.nome, service.preco);
-        availableServices.appendChild(newCard);
-      }
+      logoutIcon.onclick = logout;
+      logoutHref.appendChild(logoutIcon);
     }
 
-    function addServico() {
-      let nomeDoServico = document.getElementById("nome-servico");
-      let descDoServico = document.getElementById("desc-servico");
-      let precoDoServico = document.getElementById("preco-servico");
+    if (!localStorage.getItem("Auth")) {
+      // Caso der erro para acessar a pagina logado, comentar a linha abaixo
+      window.location.href = "../Pages/Login.html";
+    }
 
-      if (nomeDoServico.value && descDoServico.value && precoDoServico.value) {
-        let dados = {
-          nome: nomeDoServico.value,
-          desc: descDoServico.value,
-          preco: precoDoServico.value,
-        };
+    pegarAgendamentosPendentes();
+    pegarAgendamentosFinalizados();
+    pegarServicos();
+  };
 
-        let servicos = JSON.parse(window.localStorage.getItem("servicos"));
+  function mostrarPreview() {
+    let nomeDoServico = document.getElementById("nome-servico").value;
+    let descDoServico = document.getElementById("desc-servico").value;
 
-        if (servicos) {
-          servicos.push(dados);
-          window.localStorage.setItem("servicos", JSON.stringify(servicos));
-        } else {
-          let servicosArry = [dados];
-          window.localStorage.setItem("servicos", JSON.stringify(servicosArry));
-        }
+    if (nomeDoServico && descDoServico) {
+      document.getElementById("preview-title").innerHTML = nomeDoServico;
+      document.getElementById("preview-desc").innerHTML = descDoServico;
+    }
+  }
 
-        nomeDoServico.value = "";
-        descDoServico.value = "";
-        precoDoServico.value = "";
+  function logout() {
+    localStorage.removeItem("Auth");
+    window.location.href = "Login.html";
+  }
 
-        alert("Serviço Adicionado");
+  function pegarServicos() {
+    let availableServices = document.getElementById("service-container");
+    availableServices.innerHTML = "";
+
+    let services = JSON.parse(localStorage.getItem("servicos"));
+
+    if (!services) return;
+
+    for (let i = 0; i < services.length; i++) {
+      let service = services[i];
+
+      let newCard = createServiceCard(service.nome, service.preco);
+      availableServices.appendChild(newCard);
+    }
+  }
+
+  function addServico() {
+    let nomeDoServico = document.getElementById("nome-servico");
+    let descDoServico = document.getElementById("desc-servico");
+    let precoDoServico = document.getElementById("preco-servico");
+
+    if (nomeDoServico.value && descDoServico.value && precoDoServico.value) {
+      let dados = {
+        nome: nomeDoServico.value,
+        desc: descDoServico.value,
+        preco: precoDoServico.value,
+      };
+
+      let servicos = JSON.parse(window.localStorage.getItem("servicos"));
+
+      if (servicos) {
+        servicos.push(dados);
+        window.localStorage.setItem("servicos", JSON.stringify(servicos));
       } else {
-        alert("Preencha todos os campos");
+        let servicosArry = [dados];
+        window.localStorage.setItem("servicos", JSON.stringify(servicosArry));
       }
 
-      pegarServicos();
+      nomeDoServico.value = "";
+      descDoServico.value = "";
+      precoDoServico.value = "";
+
+      alert("Serviço Adicionado");
+    } else {
+      alert("Preencha todos os campos");
     }
 
-    function apagarServico(name) {
-      let services = JSON.parse(localStorage.getItem("servicos"));
+    pegarServicos();
+  }
 
-      let deletedIndex = services.findIndex((service) => service.nome === name);
-      services.splice(deletedIndex, 1);
+  function apagarServico(name) {
+    let services = JSON.parse(localStorage.getItem("servicos"));
 
-      localStorage.setItem("servicos", JSON.stringify(services));
+    let deletedIndex = services.findIndex((service) => service.nome === name);
+    services.splice(deletedIndex, 1);
 
-      pegarServicos();
-    }
+    localStorage.setItem("servicos", JSON.stringify(services));
 
-    function createServiceCard(name, price) {
-      let newCard = document.createElement("div");
+    pegarServicos();
+  }
 
-      newCard.classList.add("col-12", "col-lg-6", "p-1");
+  function createServiceCard(name, price) {
+    let newCard = document.createElement("div");
 
-      newCard.innerHTML = `
+    newCard.classList.add("col-12", "col-lg-6", "p-1");
+
+    newCard.innerHTML = `
                 <div class="card p-2">
                   <div
                     style="
@@ -152,83 +149,83 @@
                   </div>
                 </div>`;
 
-      return newCard;
-    }
+    return newCard;
+  }
 
-    function pegarAgendamentosPendentes() {
-      let containerCardsPendents = document.getElementById(
-        "container-card-pendent"
+  function pegarAgendamentosPendentes() {
+    let containerCardsPendents = document.getElementById(
+      "container-card-pendent"
+    );
+
+    containerCardsPendents.innerHTML = "";
+
+    let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
+
+    for (let i = 0; i < agendamentos.length; i++) {
+      let agendamento = agendamentos[i];
+
+      let newCard = createAgendamentoCard(
+        agendamento.servico,
+        agendamento.data,
+        agendamento.horario,
+        agendamento.detalhes,
+        agendamento.responsavel,
+        agendamento.telefone
       );
-
-      containerCardsPendents.innerHTML = "";
-
-      let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
-
-      for (let i = 0; i < agendamentos.length; i++) {
-        let agendamento = agendamentos[i];
-
-        let newCard = createAgendamentoCard(
-          agendamento.servico,
-          agendamento.data,
-          agendamento.horario,
-          agendamento.detalhes,
-          agendamento.responsavel,
-          agendamento.telefone
-        );
-        containerCardsPendents.appendChild(newCard);
-      }
+      containerCardsPendents.appendChild(newCard);
     }
+  }
 
-    function pegarAgendamentosFinalizados() {
-      let containerCardsFinalizado = document.getElementById(
-        "container-card-finalizado"
+  function pegarAgendamentosFinalizados() {
+    let containerCardsFinalizado = document.getElementById(
+      "container-card-finalizado"
+    );
+
+    containerCardsFinalizado.innerHTML = "";
+
+    let agendamentosFinalizados = JSON.parse(
+      localStorage.getItem("AgendamentosFinalizado")
+    );
+
+    if (!agendamentosFinalizados) return;
+
+    for (let i = 0; i < agendamentosFinalizados.length; i++) {
+      let agendamento = agendamentosFinalizados[i];
+
+      let newCard = createCardFinalizado(
+        agendamento.servico,
+        agendamento.data,
+        agendamento.horario,
+        agendamento.detalhes,
+        agendamento.responsavel,
+        agendamento.telefone
       );
-
-      containerCardsFinalizado.innerHTML = "";
-
-      let agendamentosFinalizados = JSON.parse(
-        localStorage.getItem("AgendamentosFinalizado")
-      );
-
-      if (!agendamentosFinalizados) return;
-
-      for (let i = 0; i < agendamentosFinalizados.length; i++) {
-        let agendamento = agendamentosFinalizados[i];
-
-        let newCard = createCardFinalizado(
-          agendamento.servico,
-          agendamento.data,
-          agendamento.horario,
-          agendamento.detalhes,
-          agendamento.responsavel,
-          agendamento.telefone
-        );
-        containerCardsFinalizado.appendChild(newCard);
-      }
+      containerCardsFinalizado.appendChild(newCard);
     }
+  }
 
-    function createAgendamentoCard(
-      NomeDoServico,
-      data,
-      horario,
-      detalhes,
-      responsavel,
-      telefone
-    ) {
-      let newDate = new Date(data);
-      let dataFormatada =
-        newDate.getDate() +
-        1 +
-        "/" +
-        (newDate.getMonth() + 1) +
-        "/" +
-        newDate.getYear().toString().substr(1);
+  function createAgendamentoCard(
+    NomeDoServico,
+    data,
+    horario,
+    detalhes,
+    responsavel,
+    telefone
+  ) {
+    let newDate = new Date(data);
+    let dataFormatada =
+      newDate.getDate() +
+      1 +
+      "/" +
+      (newDate.getMonth() + 1) +
+      "/" +
+      newDate.getYear().toString().substr(1);
 
-      let newCard = document.createElement("div");
+    let newCard = document.createElement("div");
 
-      newCard.classList.add("card-pendente");
+    newCard.classList.add("card-pendente");
 
-      newCard.innerHTML = `
+    newCard.innerHTML = `
                     <div
                       style="
                         display: flex;
@@ -283,30 +280,30 @@
                     </div>
                   `;
 
-      return newCard;
-    }
+    return newCard;
+  }
 
-    function createCardFinalizado(
-      NomeDoServico,
-      data,
-      horario,
-      detalhes,
-      responsavel,
-      telefone
-    ) {
-      let newDate = new Date(data);
-      let dataFormatada =
-        newDate.getDate() +
-        1 +
-        "/" +
-        (newDate.getMonth() + 1) +
-        "/" +
-        newDate.getYear().toString().substr(1);
-      let newCard = document.createElement("div");
+  function createCardFinalizado(
+    NomeDoServico,
+    data,
+    horario,
+    detalhes,
+    responsavel,
+    telefone
+  ) {
+    let newDate = new Date(data);
+    let dataFormatada =
+      newDate.getDate() +
+      1 +
+      "/" +
+      (newDate.getMonth() + 1) +
+      "/" +
+      newDate.getYear().toString().substr(1);
+    let newCard = document.createElement("div");
 
-      newCard.classList.add("card-pendente");
+    newCard.classList.add("card-pendente");
 
-      newCard.innerHTML = `
+    newCard.innerHTML = `
               <div
                 style="
                   display: flex;
@@ -355,201 +352,165 @@
               </div>
             `;
 
-      return newCard;
-    }
+    return newCard;
+  }
 
-    function retirarItemAgendamentos(data) {
-      let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
+  function retirarItemAgendamentos(data) {
+    let agendamentos = JSON.parse(localStorage.getItem("agendamentos"));
 
-      let deletedIndex = agendamentos.findIndex(
-        (agendamento) => agendamento.data === data
+    let deletedIndex = agendamentos.findIndex(
+      (agendamento) => agendamento.data === data
+    );
+
+    let agendamentoDeletado = agendamentos[deletedIndex];
+    agendamentos.splice(deletedIndex, 1);
+
+    localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+    return agendamentoDeletado;
+  }
+
+  function excluirAgendamento(data) {
+    retirarItemAgendamentos(data);
+    //Reseta Datas Reservadas
+    let dataReservadas = JSON.parse(localStorage.getItem("DatasReservadas"));
+
+    let deletedIndexData = dataReservadas.findIndex(
+      (dataReservada) => dataReservada === data
+    );
+    dataReservadas.splice(deletedIndexData, 1);
+
+    localStorage.setItem("DatasReservadas", JSON.stringify(dataReservadas));
+    pegarAgendamentosPendentes();
+  }
+
+  function finalizarAgendamento(data) {
+    let agendamento = retirarItemAgendamentos();
+
+    let agendamentosFinalizado = JSON.parse(
+      localStorage.getItem("AgendamentosFinalizado")
+    );
+
+    if (agendamentosFinalizado) {
+      agendamentosFinalizado.push(agendamento);
+      localStorage.setItem(
+        "AgendamentosFinalizado",
+        JSON.stringify(agendamentosFinalizado)
       );
-
-      let agendamentoDeletado = agendamentos[deletedIndex];
-      agendamentos.splice(deletedIndex, 1);
-
-      localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
-      return agendamentoDeletado;
-    }
-
-    function excluirAgendamento(data) {
-      retirarItemAgendamentos(data);
-      //Reseta Datas Reservadas
-      let dataReservadas = JSON.parse(localStorage.getItem("DatasReservadas"));
-
-      let deletedIndexData = dataReservadas.findIndex(
-        (dataReservada) => dataReservada === data
+    } else {
+      localStorage.setItem(
+        "AgendamentosFinalizado",
+        JSON.stringify([agendamento])
       );
-      dataReservadas.splice(deletedIndexData, 1);
-
-      localStorage.setItem("DatasReservadas", JSON.stringify(dataReservadas));
-      pegarAgendamentosPendentes();
     }
 
-    function finalizarAgendamento(data) {
-      let agendamento = retirarItemAgendamentos();
+    pegarAgendamentosPendentes();
+    pegarAgendamentosFinalizados();
+  }
+</script>
 
-      let agendamentosFinalizado = JSON.parse(
-        localStorage.getItem("AgendamentosFinalizado")
-      );
+<body id="Body">
+  <nav class="navbar">
+    <a href="Index.html">
+      <img class="logo" src="../Assets/logo1.png" />
+    </a>
 
-      if (agendamentosFinalizado) {
-        agendamentosFinalizado.push(agendamento);
-        localStorage.setItem(
-          "AgendamentosFinalizado",
-          JSON.stringify(agendamentosFinalizado)
-        );
-      } else {
-        localStorage.setItem(
-          "AgendamentosFinalizado",
-          JSON.stringify([agendamento])
-        );
-      }
-
-      pegarAgendamentosPendentes();
-      pegarAgendamentosFinalizados();
-    }
-  </script>
-
-  <body id="Body">
-    <nav class="navbar">
-      <a href="Index.html">
-        <img class="logo" src="../Assets/logo1.png" />
+    <div class="nav-options-container">
+      <ul id="nav-options" class="navbar-options">
+        <li><a href="Index.html">Home</a></li>
+        <li><a href="Servico.html">Serviços</a></li>
+        <li><a href="#faleconosco">Fale Conosco</a></li>
+      </ul>
+      <a href="Login.html">
+        <i style="font-size: 1.3rem" class="mdi mdi-account"></i>
       </a>
+      <a id="logout" href="Login.html"></a>
+    </div>
+  </nav>
 
-      <div class="nav-options-container">
-        <ul id="nav-options" class="navbar-options">
-          <li><a href="Index.html">Home</a></li>
-          <li><a href="Servico.html">Serviços</a></li>
-          <li><a href="#faleconosco">Fale Conosco</a></li>
-        </ul>
-        <a href="Login.html">
-          <i style="font-size: 1.3rem" class="mdi mdi-account"></i>
-        </a>
-        <a id="logout" href="Login.html"></a>
-      </div>
-    </nav>
-
-    <section class="section-container">
-      <h2 class="mb-3">Cadastro de Serviço</h2>
-      <div style="display: flex; gap: 25px">
-        <div class="card">
-          <div class="card-body" style="width: 40vw">
-            <div class="mb-2">
-              <label class="form-label">Nome do serviço</label>
-              <input type="text" id="nome-servico" class="form-control" />
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Descrição do serviço</label>
-              <input type="text" id="desc-servico" class="form-control" />
-            </div>
-            <div class="mb-2">
-              <label class="form-label">Preço</label>
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="valor-prefixo">R$</span>
-                <input
-                  type="number"
-                  id="preco-servico"
-                  class="form-control"
-                  placeholder="100"
-                />
-              </div>
-            </div>
+  <section class="section-container">
+    <h2 class="mb-3">Cadastro de Serviço</h2>
+    <div style="display: flex; gap: 25px">
+      <div class="card">
+        <div class="card-body" style="width: 40vw">
+          <div class="mb-2">
+            <label class="form-label">Nome do serviço</label>
+            <input type="text" id="nome-servico" class="form-control" />
           </div>
-          <div
-            class="mb-2 mx-3"
-            style="display: flex; justify-content: space-between"
-          >
-            <button class="btn btn-primary" onclick="mostrarPreview()">
-              Preview
-            </button>
-            <button class="btn btn-primary" onclick="addServico()">
-              Criar Serviço
-            </button>
+          <div class="mb-2">
+            <label class="form-label">Descrição do serviço</label>
+            <input type="text" id="desc-servico" class="form-control" />
           </div>
-        </div>
-        <div class="card">
-          <div class="card" style="width: 18rem">
-            <img
-              id="preview-img"
-              src="../Assets/servicos/i0.png"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title" id="preview-title">Nome do Serviço</h5>
-              <p class="card-text" id="preview-desc">Descrição do Serviço</p>
-              <div style="display: flex; justify-content: flex-end">
-                <a class="btn btn-secondary" disabled>Agendar</a>
-              </div>
+          <div class="mb-2">
+            <label class="form-label">Preço</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="valor-prefixo">R$</span>
+              <input type="number" id="preco-servico" class="form-control" placeholder="100" />
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="section-container">
-      <h2 class="mb-3">Gerenciamento de Serviço</h2>
-      <div style="height: 385px; max-height: 385px" class="inner-card col-8">
-        <div class="inner-card-title mb-3">Serviços Disponives</div>
-        <div style="overflow-y: scroll; height: 295px">
-          <div
-            style="display: flex; flex-wrap: wrap"
-            id="service-container"
-          ></div>
+        <div class="mb-2 mx-3" style="display: flex; justify-content: space-between">
+          <button class="btn btn-primary" onclick="addServico()">
+            Criar Serviço
+          </button>
         </div>
       </div>
-    </section>
 
-    <section class="section-container">
-      <h2 class="mb-3">Gerenciamento de Agendamentos</h2>
-      <div class="row w-100">
-        <div class="col-12 col-lg-6 px-3">
-          <div class="inner-card">
-            <div class="inner-card-title mb-3">Serviços Pendentes</div>
-            <div
-              id="container-card-pendent"
-              style="height: 285px; overflow-y: scroll"
-            ></div>
-          </div>
-        </div>
-        <div class="col-12 col-lg-6 px-3">
-          <div class="inner-card">
-            <div class="inner-card-title mb-3">Serviços Finalizados</div>
-            <div
-              id="container-card-finalizado"
-              style="height: 285px; overflow-y: scroll"
-            ></div>
-          </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="section-container">
+    <h2 class="mb-3">Gerenciamento de Serviço</h2>
+    <div style="height: 385px; max-height: 385px" class="inner-card col-8">
+      <div class="inner-card-title mb-3">Serviços adicionados</div>
+      <div style="overflow-y: scroll; height: 295px">
+        <div style="display: flex; flex-wrap: wrap" id="service-container"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-container">
+    <h2 class="mb-3">Gerenciamento de Agendamentos</h2>
+    <div class="row w-100">
+      <div class="col-12 col-lg-6 px-3">
+        <div class="inner-card">
+          <div class="inner-card-title mb-3">Serviços Pendentes</div>
+          <div id="container-card-pendent" style="height: 285px; overflow-y: scroll"></div>
         </div>
       </div>
-    </section>
-
-    <footer>
-      <div style="display: flex; align-items: center">
-        <img style="height: 250px" src="../Assets/LG.png" />
-        <div style="display: flex; flex-direction: column; gap: 25px">
-          <div class="d-flex align-items-center">
-            <img class="footer-icons" src="../Assets/telefone.png" />
-            <p>(79) 99934-3456</p>
-          </div>
-          <div class="d-flex align-items-center">
-            <img class="footer-icons" src="../Assets/email.png" />
-            <p>masterclean@gmail.com</p>
-          </div>
-          <div class="d-flex align-items-center">
-            <img class="footer-icons" src="../Assets/instagram.png" />
-            <p>@masterclean</p>
-          </div>
+      <div class="col-12 col-lg-6 px-3">
+        <div class="inner-card">
+          <div class="inner-card-title mb-3">Serviços Finalizados</div>
+          <div id="container-card-finalizado" style="height: 285px; overflow-y: scroll"></div>
         </div>
       </div>
-    </footer>
+    </div>
+  </section>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"
-    ></script>
-    <script src="../utils/logout.js"></script>
-  </body>
+  <footer>
+    <div style="display: flex; align-items: center">
+      <img style="height: 250px" src="../Assets/LG.png" />
+      <div style="display: flex; flex-direction: column; gap: 25px">
+        <div class="d-flex align-items-center">
+          <img class="footer-icons" src="../Assets/telefone.png" />
+          <p>(79) 99934-3456</p>
+        </div>
+        <div class="d-flex align-items-center">
+          <img class="footer-icons" src="../Assets/email.png" />
+          <p>masterclean@gmail.com</p>
+        </div>
+        <div class="d-flex align-items-center">
+          <img class="footer-icons" src="../Assets/instagram.png" />
+          <p>@masterclean</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script src="../utils/logout.js"></script>
+</body>
+
 </html>
