@@ -15,13 +15,37 @@
 
   <script>
     window.onload = () => {
+      let isAdmin = localStorage.getItem("Auth") === "gestor";
+      let isUser = localStorage.getItem("Auth") === "user";
+
+      if (isAdmin) {
+        let navOptions = document.getElementById("nav-options");
+        let newOption = document.createElement("li");
+        newOption.innerHTML = `<a href="Gerenciamento.html">Gerenciamento</a>`;
+        navOptions.appendChild(newOption);
+      }
+
+      if (isUser) {
+        window.location.href = "Login.html";
+      }
+
+      if (isAdmin || isUser) {
+        let logoutHref = document.getElementById("logout");
+        let logoutIcon = document.createElement("div");
+        logoutIcon.classList.add("mdi", "mdi-logout");
+
+        logoutIcon.onclick = logout;
+        logoutHref.appendChild(logoutIcon);
+      }
+
       if (!localStorage.getItem("Auth")) {
-        // Caso der erro para acessar a pagina logado, commentar a linha abaixo
+        // Caso der erro para acessar a pagina logado, comentar a linha abaixo
         window.location.href = "../Pages/Login.html";
       }
 
       pegarAgendamentosPendentes();
       pegarAgendamentosFinalizados();
+      pegarServicos();
     };
 
     function mostrarPreview() {
@@ -35,8 +59,24 @@
     }
 
     function logout() {
-      debugger;
       localStorage.removeItem("Auth");
+      window.location.href = "Login.html";
+    }
+
+    function pegarServicos() {
+      let availableServices = document.getElementById("service-container");
+      availableServices.innerHTML = "";
+
+      let services = JSON.parse(localStorage.getItem("servicos"));
+
+      if (!services) return;
+
+      for (let i = 0; i < services.length; i++) {
+        let service = services[i];
+
+        let newCard = createServiceCard(service.nome, service.preco);
+        availableServices.appendChild(newCard);
+      }
     }
 
     function addServico() {
@@ -64,9 +104,55 @@
         nomeDoServico.value = "";
         descDoServico.value = "";
         precoDoServico.value = "";
+
+        alert("Serviço Adicionado");
+      } else {
+        alert("Preencha todos os campos");
       }
 
-      alert("Serviço Adicionado");
+      pegarServicos();
+    }
+
+    function apagarServico(name) {
+      let services = JSON.parse(localStorage.getItem("servicos"));
+
+      let deletedIndex = services.findIndex((service) => service.nome === name);
+      services.splice(deletedIndex, 1);
+
+      localStorage.setItem("servicos", JSON.stringify(services));
+
+      pegarServicos();
+    }
+
+    function createServiceCard(name, price) {
+      let newCard = document.createElement("div");
+
+      newCard.classList.add("col-12", "col-lg-6", "p-1");
+
+      newCard.innerHTML = `
+            <div class="card p-2">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div>
+                  <label class="service-name">Nome do Serviço</label>
+                  <p>${name}</p>
+                </div>
+                <div>
+                  <label class="service-name">Preço</label>
+                  <p>R$${price}</p>
+                </div>
+                <button class="btn-excluir" onclick="apagarServico('${name}')">
+                  <i  class="mdi mdi-trash-can-outline"></i>
+                </button>
+              </div>
+            </div>`;
+
+      return newCard;
     }
 
     function pegarAgendamentosPendentes() {
@@ -190,8 +276,6 @@
         newDate.getYear().toString().substr(1);
       let newCard = document.createElement("div");
 
-      console.log(newDate.getDate());
-
       newCard.classList.add("card-pendente");
 
       newCard.innerHTML = `
@@ -263,7 +347,6 @@
     }
 
     function finalizarAgendamento(data) {
-      console.log("AAAAAAAAAAAAAAAAAA");
       let agendamento = retirarItemAgendamentos();
 
       let agendamentosFinalizado = JSON.parse(
@@ -289,32 +372,21 @@
   </script>
 
   <body id="Body">
-    <nav class="navbar navbar-expand-lg" id="Nav">
-      <div class="container-fluid">
-        <a class="navbar-brand" id="Link" href="../Pages/Index.html"
-          ><img src="../Assets/logo1.png" alt="" id="imgLogo"
-        /></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav" id="NavLink">
-            <!-- <a class="nav-link active" id="Link" aria-current="page" href="Index.html">Home</a>
-          <a class="nav-link active" id="Link" href="Servico.html">Serviços</a>
-          <a class="nav-link active" id="Link" href="#faleconosco">Fale Conosco</a> -->
-          </div>
-          <a class="navbar-brand" id="Link" href="#"
-            ><img src="../Assets/logout2.png" alt="Logout" id="logoutBtn"
-          /></a>
-        </div>
+    <nav class="navbar">
+      <a href="Index.html">
+        <img class="logo" src="../Assets/logo1.png" />
+      </a>
+
+      <div class="nav-options-container">
+        <ul id="nav-options" class="navbar-options">
+          <li><a href="Index.html">Home</a></li>
+          <li><a href="Servico.html">Serviços</a></li>
+          <li><a href="#faleconosco">Fale Conosco</a></li>
+        </ul>
+        <a href="Login.html">
+          <i style="font-size: 1.3rem" class="mdi mdi-account"></i>
+        </a>
+        <a id="logout" href="Login.html"></a>
       </div>
     </nav>
 
@@ -376,6 +448,19 @@
     </section>
 
     <section class="section-container">
+      <h2 class="mb-3">Gerenciamento de Serviço</h2>
+      <div style="height: 385px; max-height: 385px" class="inner-card col-8">
+        <div class="inner-card-title mb-3">Serviços Disponives</div>
+        <div style="overflow-y: scroll; height: 295px">
+          <div
+            style="display: flex; flex-wrap: wrap"
+            id="service-container"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-container">
       <h2 class="mb-3">Gerenciamento de Agendamentos</h2>
       <div class="row w-100">
         <div class="col-12 col-lg-6 px-3">
@@ -399,8 +484,24 @@
       </div>
     </section>
 
-    <footer class="Footer">
-      <img src="../Assets/LG.png" id="imgFooter" height="200px" />
+    <footer>
+      <div style="display: flex; align-items: center">
+        <img style="height: 250px" src="../Assets/LG.png" />
+        <div style="display: flex; flex-direction: column; gap: 25px">
+          <div class="d-flex align-items-center">
+            <img class="footer-icons" src="../Assets/telefone.png" />
+            <p>(79) 99934-3456</p>
+          </div>
+          <div class="d-flex align-items-center">
+            <img class="footer-icons" src="../Assets/email.png" />
+            <p>masterclean@gmail.com</p>
+          </div>
+          <div class="d-flex align-items-center">
+            <img class="footer-icons" src="../Assets/instagram.png" />
+            <p>@masterclean</p>
+          </div>
+        </div>
+      </div>
     </footer>
 
     <script

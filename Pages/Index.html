@@ -14,169 +14,107 @@
   </head>
 
   <script>
+    window.onload = () => {
+      let isAdmin = localStorage.getItem("Auth") === "gestor";
+      let isUser = localStorage.getItem("Auth") === "user";
+
+      if (isAdmin) {
+        let navOptions = document.getElementById("nav-options");
+        let newOption = document.createElement("li");
+        newOption.innerHTML = `<a href="Gerenciamento.html">Gerenciamento</a>`;
+        navOptions.appendChild(newOption);
+      }
+
+      if (isAdmin || isUser) {
+        let logoutHref = document.getElementById("logout");
+        let logoutIcon = document.createElement("div");
+        logoutIcon.classList.add("mdi", "mdi-logout");
+        logoutIcon.onclick = logout;
+        logoutHref.appendChild(logoutIcon);
+      }
+    };
+
     function logout() {
-      debugger;
       localStorage.removeItem("Auth");
+      window.location.href = "Login.html";
     }
   </script>
 
   <body>
-    <nav class="navbar navbar-expand-lg" id="Nav">
-      <div class="container-fluid">
-        <a class="navbar-brand" id="Link" href="../Pages/Index.html"
-          ><img src="../Assets/logo1.png" alt="" id="imgLogo"
-        /></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav" id="NavLink">
-            <a
-              class="nav-link active"
-              id="Link"
-              aria-current="page"
-              href="Index.html"
-              >Home</a
-            >
-            <a class="nav-link active" id="Link" href="Servico.html"
-              >Serviços</a
-            >
-            <a class="nav-link active" id="Link" href="#faleconosco"
-              >Fale Conosco</a
-            >
-          </div>
-          <a class="navbar-brand" id="Link" href="../Pages/Login.html"
-            ><img src="../Assets/login.png" alt="Login" id="imgLogin"
-          /></a>
-          <!-- <a class="navbar-brand-logout" id="Link" onclick="logout()">Logout</a> -->
-        </div>
+    <nav class="navbar">
+      <a href="Index.html">
+        <img class="logo" src="../Assets/logo1.png" />
+      </a>
+
+      <div class="nav-options-container">
+        <ul id="nav-options" class="navbar-options">
+          <li><a href="Index.html">Home</a></li>
+          <li><a href="Servico.html">Serviços</a></li>
+          <li><a href="#faleconosco">Fale Conosco</a></li>
+        </ul>
+        <a href="Login.html">
+          <i style="font-size: 1.3rem" class="mdi mdi-account"></i>
+        </a>
+        <a id="logout" href="Login.html"></a>
       </div>
     </nav>
-    <img src="../Assets/Banner2.png" alt="" id="Banner" />
-    <img src="../Assets/nome.png" alt="" id="Nome" />
-    <div class="conteudo">
-      <img src="../Assets/Lava-jato1.png" alt="" id="imgLavaJato" />
-      <h2 id="Title1">
-        Lavagem e Limpeza <br />
-        Profissional de Seu Veículo
-      </h2>
+    <section class="banner-section">
+      <img src="../Assets/nome.png" />
+    </section>
+    <section class="service-section">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-lg-6 d-none d-lg-block">
+            <img style="border-radius: 25px" src="../Assets/Lava-jato1.jpeg" />
+          </div>
+          <div class="col-12 col-lg-6">
+            <h2 style="font-size: 2rem; text-align: center">
+              Lavagem e Limpeza <br />
+              Profissional de Seu Veículo
+            </h2>
 
-      <div id="Conteudo">
-        <p>
-          Os serviços de limpeza para seu carro ou moto ficou ainda mais fácil!
-          <br />
-          Com alguns cliques você agenda um serviço para seu veículo, com <br />
-          horário agendado você evita filas e consegue se planejar melhor.
-        </p>
-        <p>
-          No site você pode agendar serviços de limpeza ou estética para o
-          <br />
-          seu veículo de forma simplificada.
-        </p>
-      </div>
-    </div>
-    <!-- <div class="Service">
-    <h2 id="Title2">Agende já seu Serviço</h2>
-    <br>
-    <br>
-    <div class="container text-center">
-      <div class="row align-items-center" id="Col">
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="../Assets/i1.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title" id="lavagemSimples">Lavagem Simples</h5>
-              <p class="card-text">Lavagem mais rápida, onde prioriza a lataria do carro e os pneus ganham atenção
-                também, porém o motor fica de fora.</p>
-              <a href="../Pages/Agendamento.html" class="btn btn-primary" id="Btn-lavagemsimples">Agendar</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="../Assets/i3.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Lavagem Completa</h5>
-              <p class="card-text">Além dos itens da lavagem simples, o motor, a parte de baixo do veículo também é
-                lavado e o interior é aspirado. </p>
-              <a href="../Pages/Agendamento.html" class="btn btn-primary" id="Btn">Agendar</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="../Assets/i5.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Polimento de Pintura</h5>
-              <p class="card-text">Processo estético empregado no veículo. A tinta danificada é removida para ser
-                empregado outro procedimento de pintura. </p>
-              <a href="../Pages/Agendamento.html" class="btn btn-primary" id="Btn">Agendar</a>
+            <div style="font-size: 1.2rem; text-align: center">
+              <p>
+                Os serviços de limpeza para seu carro ou moto ficou ainda mais
+                fácil!
+                <br />
+                Com alguns cliques você agenda um serviço para seu veículo, com
+                <br />
+                horário agendado você evita filas e consegue se planejar melhor.
+              </p>
+              <p>
+                No site você pode agendar serviços de limpeza ou estética para o
+                <br />
+                seu veículo de forma simplificada.
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
- 
-  <br>
-  <br>
-
-  <div class="container text-center">
-    <div class="row align-items-center" id="Col">
-      <div class="col">
-        <div class="card" style="width: 18rem;">
-          <img src="../Assets/i4.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Higieninaçao Interna</h5>
-            <p class="card-text">No serviço há uma limpeza detalhada que inclui teto, estofado, painel, lateral de
-              portas, carpete e porta-malas.</p>
-            <a href="../Pages/Agendamento.html" class="btn btn-primary" id="Btn">Agendar</a>
+    </section>
+    <footer>
+      <div style="display: flex; align-items: center">
+        <img style="height: 250px" src="../Assets/LG.png" />
+        <div style="display: flex; flex-direction: column; gap: 25px">
+          <div class="d-flex align-items-center">
+            <img class="footer-icons" src="../Assets/telefone.png" />
+            <p>(79) 99934-3456</p>
+          </div>
+          <div class="d-flex align-items-center">
+            <img class="footer-icons" src="../Assets/email.png" />
+            <p>masterclean@gmail.com</p>
+          </div>
+          <div class="d-flex align-items-center">
+            <img class="footer-icons" src="../Assets/instagram.png" />
+            <p>@masterclean</p>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card" style="width: 18rem;">
-          <img src="../Assets/i9.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Hidratação de Couro</h5>
-            <p class="card-text">Consiste em um serviço que devolve umidade ao material, serve para conservar o
-              equipamento e garantir uma melhor estética.</p>
-            <a href="../Pages/Agendamento.html" class="btn btn-primary" id="Btn">Agendar</a>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card" style="width: 18rem;">
-          <img src="../Assets/i8.png" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Polimento de Faróis</h5>
-            <p class="card-text">É um processo de limpeza das luzes dianteiras do veículo, busca revitalizar os faróis
-              deteriorados com o tempo, o que os deixa com um aspecto de novo. </p>
-            <a href="../Pages/Agendamento.html" class="btn btn-primary" id="Btn">Agendar</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br>
-    <a href="Servico.html" id="LinkCard">Ver mais</a>
-  </div>
-  </div> -->
-
-    <br />
-    <br /><br /><br /><br /><br />
-    <br />
-    <br />
-    <br />
-    <footer class="Footer">
-      <br />
-      <form action="https://formspree.io/f/xvojlpak" method="POST">
+      <form
+        class="d-none d-xl-block my-5"
+        action="https://formspree.io/f/xvojlpak"
+        method="POST"
+      >
         <a href="" name="faleconosco"></a>
         <h2 id="Title3">Fale Conosco</h2>
         <br />
@@ -211,21 +149,6 @@
           </div>
         </div>
       </form>
-
-      <img src="../Assets/LG.png" id="imgFooter" alt="" />
-      <div id="icons">
-        <img src="../Assets/telefone.png" class="icon" id="iconTel" alt="" />
-        <h5 class="textFooter" id="textTel">(79) 99934-3456</h5>
-        <br />
-        <img src="../Assets/email.png" class="icon" id="iconEmail" alt="" />
-        <h5 class="textFooter" id="textEmail">masterclean@gmail.com</h5>
-        <br />
-        <img src="../Assets/instagram.png" class="icon" id="iconInsta" alt="" />
-        <h5 class="textFooter" id="textInsta">@masterclean</h5>
-      </div>
-      <br />
-      <br />
-      <br />
     </footer>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

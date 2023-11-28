@@ -1,3 +1,6 @@
+@import "reset.css";
+@import url("https://cdn.materialdesignicons.com/5.1.45/css/materialdesignicons.min.css");
+
 * {
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
@@ -27,30 +30,9 @@
   position: relative;
 }
 
-#imgLavaJato {
-  width: 40%;
-  margin-left: 7%;
-  border-radius: 2%;
-  position: absolute;
-}
-
 .icon {
   width: 5%;
   margin-left: 11%;
-}
-#iconTel {
-  margin-top: -50%;
-}
-#iconEmail {
-  margin-top: 2%;
-}
-#iconInsta {
-  margin-top: 2.5%;
-}
-#icons {
-  margin-top: -1%;
-  margin-left: 7%;
-  position: absolute;
 }
 .textFooter {
   margin-left: 15%;
@@ -71,4 +53,48 @@
 
 p {
   margin: 0;
+}
+
+.navbar {
+  display: flex;
+  background-color: #000;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  margin-left: 24px;
+  height: 60px;
+}
+
+.nav-options-container {
+  display: flex;
+  gap: 25px;
+  margin: 0 60px;
+  align-items: center;
+}
+
+.navbar-options {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.account-container {
+  margin-right: 25px;
+}
+
+footer {
+  margin-top: 50px;
+  background-color: #000;
+  display: flex;
+  justify-content: space-evenly;
+  color: white;
+}
+
+.footer-icons {
+  height: 35px;
+  margin-right: 25px;
 }

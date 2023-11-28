@@ -14,6 +14,25 @@
   </head>
   <script>
     window.onload = () => {
+      let isAdmin = localStorage.getItem("Auth") === "gestor";
+      let isUser = localStorage.getItem("Auth") === "user";
+
+      if (isAdmin) {
+        let navOptions = document.getElementById("nav-options");
+        let newOption = document.createElement("li");
+        newOption.innerHTML = `<a href="Gerenciamento.html">Gerenciamento</a>`;
+        navOptions.appendChild(newOption);
+      }
+
+      if (isAdmin || isUser) {
+        let logoutHref = document.getElementById("logout");
+        let logoutIcon = document.createElement("div");
+        logoutIcon.classList.add("mdi", "mdi-logout");
+
+        logoutIcon.onclick = logout;
+        logoutHref.appendChild(logoutIcon);
+      }
+
       addServicos();
     };
 
@@ -75,60 +94,43 @@
         containerServico.appendChild(newCard);
       }
     }
+
+    function logout() {
+      localStorage.removeItem("Auth");
+      window.location.href = "Login.html";
+    }
   </script>
 
   <body>
-    <nav class="navbar navbar-expand-lg" id="Nav">
-      <div class="container-fluid">
-        <a class="navbar-brand" id="Link" href="../Pages/Index.html"
-          ><img src="../Assets/logo1.png" alt="" id="imgLogo"
-        /></a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav" id="NavLink">
-            <a
-              class="nav-link active"
-              id="Link"
-              aria-current="page"
-              href="Index.html"
-              >Home</a
-            >
-            <a class="nav-link active" id="Link" href="Servico.html"
-              >Serviços</a
-            >
-            <a class="nav-link active" id="Link" href="#faleconosco"
-              >Fale Conosco</a
-            >
-          </div>
-          <a class="navbar-brand" id="Link" href="../Pages/Login.html"
-            ><img src="../Assets/login.png" alt="" id="imgLogin"
-          /></a>
-        </div>
+    <nav class="navbar">
+      <a href="Index.html">
+        <img class="logo" src="../Assets/logo1.png" />
+      </a>
+
+      <div class="nav-options-container">
+        <ul id="nav-options" class="navbar-options">
+          <li><a href="Index.html">Home</a></li>
+          <li><a href="Servico.html">Serviços</a></li>
+          <li><a href="#faleconosco">Fale Conosco</a></li>
+        </ul>
+        <a href="Login.html">
+          <i style="font-size: 1.3rem" class="mdi mdi-account"></i>
+        </a>
+        <a id="logout" href="Login.html"> </a>
       </div>
     </nav>
-    <img src="../Assets/ServiceBanner.png" alt="" id="Banner" />
-    <img src="../Assets/ServiceName.png" alt="" id="Nome" />
+    <section class="banner-section">
+      <img src="../Assets/ServiceName.png" />
+    </section>
+
+    <section class="services-section">
+      <h1 style="text-align: center">Serviços</h1>
+    </section>
 
     <div class="Service">
-      <h2 id="Title2">Serviços</h2>
-      <br />
-      <br />
-
-      <div></div>
-
       <div class="container text-center">
         <div id="container-servicos" class="row align-items-center">
-          <div class="col-12 col-lg-4">
+          <div class="mb-4 col-12 col-lg-4">
             <div class="card">
               <img
                 src="../Assets/servicos/i1.png"
@@ -151,7 +153,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-lg-4">
+          <div class="mb-4 col-12 col-lg-4">
             <div class="card">
               <img
                 src="../Assets/servicos/i3.png"
@@ -173,7 +175,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-lg-4">
+          <div class="mb-4 col-12 col-lg-4">
             <div class="card">
               <img
                 src="../Assets/servicos/i5.png"
@@ -196,7 +198,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-lg-4">
+          <div class="mb-4 col-12 col-lg-4">
             <div class="card">
               <img
                 src="../Assets/servicos/i4.png"
@@ -219,7 +221,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-lg-4">
+          <div class="mb-4 col-12 col-lg-4">
             <div class="card">
               <img
                 src="../Assets/servicos/i0.png"
@@ -242,7 +244,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-lg-4">
+          <div class="mb-4 col-12 col-lg-4">
             <div class="card">
               <img
                 src="../Assets/servicos/i8.png"
@@ -269,18 +271,34 @@
         </div>
       </div>
     </div>
-    <!---->
-    <br />
-    <br />
 
     <div>
-      <footer class="Footer">
-        <br />
-        <form action="https://formspree.io/f/xvojlpak" method="POST">
+      <footer>
+        <div style="display: flex; align-items: center">
+          <img style="height: 250px" src="../Assets/LG.png" />
+          <div style="display: flex; flex-direction: column; gap: 25px">
+            <div class="d-flex align-items-center">
+              <img class="footer-icons" src="../Assets/telefone.png" />
+              <p>(79) 99934-3456</p>
+            </div>
+            <div class="d-flex align-items-center">
+              <img class="footer-icons" src="../Assets/email.png" />
+              <p>masterclean@gmail.com</p>
+            </div>
+            <div class="d-flex align-items-center">
+              <img class="footer-icons" src="../Assets/instagram.png" />
+              <p>@masterclean</p>
+            </div>
+          </div>
+        </div>
+        <form
+          class="d-none d-xl-block my-5"
+          action="https://formspree.io/f/xvojlpak"
+          method="POST"
+        >
           <a href="" name="faleconosco"></a>
-          <h2 id="Title3">Fale Conosco</h2>
-          <br />
-          <div class="card" style="width: 30rem" id="card-Footer">
+          <h2>Fale Conosco</h2>
+          <div class="card" style="width: 30rem">
             <div class="card-body">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
@@ -311,25 +329,6 @@
             </div>
           </div>
         </form>
-        <img src="../Assets/LG.png" id="imgFooter" alt="" />
-        <div id="icons">
-          <img src="../Assets/telefone.png" class="icon" id="iconTel" alt="" />
-          <h5 class="textFooter" id="textTel">(79) 99934-3456</h5>
-          <br />
-          <img src="../Assets/email.png" class="icon" id="iconEmail" alt="" />
-          <h5 class="textFooter" id="textEmail">masterclean@gmail.com</h5>
-          <br />
-          <img
-            src="../Assets/instagram.png"
-            class="icon"
-            id="iconInsta"
-            alt=""
-          />
-          <h5 class="textFooter" id="textInsta">@masterclean</h5>
-        </div>
-        <br />
-        <br />
-        <br />
       </footer>
     </div>
     <script

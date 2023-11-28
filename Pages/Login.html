@@ -1,135 +1,192 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link href="../Style/styleLogin.css" rel="stylesheet">
-  <title>Login</title>
-</head>
-<style>
-  .hidden {
-    display: none;
-  }
-</style>
-<script>
-
-  var dados = {
-    email: "",
-    senha: ""
-  };
-  function showAlert(html, msg) {
-    var div = document.getElementById(html);
-    if (div.classList.contains('hidden'))
-      div.classList.toggle('hidden');
-
-    div.innerHTML = msg;
-
-    if (html != 'div-error') {
-      setTimeout(function () {
-        div.classList.toggle('hidden');
-        document.location.href = "./Servico.html"
-      }, 2000);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link href="../Style/styleLogin.css" rel="stylesheet" />
+    <title>Login</title>
+  </head>
+  <style>
+    .hidden {
+      display: none;
     }
-  }
-  function fazerRequisicao() {
-    event.preventDefault();
+  </style>
+  <script>
+    window.onload = () => {
+      let isAdmin = localStorage.getItem("Auth") === "gestor";
+      let isUser = localStorage.getItem("Auth") === "user";
+
+      if (isAdmin) {
+        let navOptions = document.getElementById("nav-options");
+        let newOption = document.createElement("li");
+        newOption.innerHTML = `<a href="Gerenciamento.html">Gerenciamento</a>`;
+        navOptions.appendChild(newOption);
+      }
+
+      if (isAdmin || isUser) {
+        let logoutHref = document.getElementById("logout");
+        let logoutIcon = document.createElement("div");
+        logoutIcon.classList.add("mdi", "mdi-logout");
+        logoutIcon.onclick = logout;
+        logoutHref.appendChild(logoutIcon);
+      }
+    };
+
+    function logout() {
+      localStorage.removeItem("Auth");
+      window.location.href = "Login.html";
+    }
+
     var dados = {
-      email: document.getElementById("email").value,
-      senha: document.getElementById("senha").value
+      email: "",
+      senha: "",
     };
-    var configuracao = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(dados)
-    };
-    const onSuccess = response => {
-      response.json().then(jsonResponse => {
-        if (dados.email === 'gestor@gmail.com' && dados.senha === 'gestor') {
-          // Exibe uma mensagem personalizada para o gestor
-          showAlert('div-sucess', 'Gestor logado!');
-          // Aguarda 2 segundos antes de redirecionar
-          setTimeout(() => {
-            document.location.href = "../Pages/Gerenciamento.html";
-          }, 2000);
-        } else {
-          localStorage['Auth'] = JSON.stringify("logado");
-          showAlert('div-sucess', jsonResponse);
-        }
-      });
-    }
+    function showAlert(html, msg) {
+      var div = document.getElementById(html);
+      if (div.classList.contains("hidden")) div.classList.toggle("hidden");
 
-    const onFailure = response => {
-      response.json().then(jsonResponse => showAlert('div-error', jsonResponse));
-      return response;
-    }
+      div.innerHTML = msg;
 
-    fetch('http://localhost:3000/api/login', configuracao)
-      .then(response => {
-        if (!response.ok) {
-          throw response;
-        }
+      if (html != "div-error") {
+        setTimeout(function () {
+          div.classList.toggle("hidden");
+          document.location.href = "./Servico.html";
+        }, 2000);
+      }
+    }
+    function fazerRequisicao() {
+      event.preventDefault();
+      var dados = {
+        email: document.getElementById("email").value,
+        senha: document.getElementById("senha").value,
+      };
+      var configuracao = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dados),
+      };
+      const onSuccess = (response) => {
+        response.json().then((jsonResponse) => {
+          if (dados.email === "gestor@gmail.com" && dados.senha === "gestor") {
+            // Exibe uma mensagem personalizada para o gestor
+            showAlert("div-sucess", "Gestor logado!");
+            // Aguarda 2 segundos antes de redirecionar
+            setTimeout(() => {
+              document.location.href = "../Pages/Gerenciamento.html";
+            }, 2000);
+            localStorage.setItem("Auth", "gestor");
+          } else {
+            localStorage.setItem("Auth", "user");
+            console.log(response);
+            showAlert("div-sucess", jsonResponse);
+          }
+        });
+      };
+
+      const onFailure = (response) => {
+        response
+          .json()
+          .then((jsonResponse) => showAlert("div-error", jsonResponse));
         return response;
-      })
-      .then(onSuccess, onFailure)
-      .catch(err => {
-        console.error(err);
-      })
-  }
+      };
 
-</script>
+      fetch("http://localhost:3000/api/login", configuracao)
+        .then((response) => {
+          console.log(response);
+          if (!response.ok) {
+            throw response;
+          }
+          return response;
+        })
+        .then(onSuccess, onFailure)
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  </script>
 
-<body class="body">
-  <nav class="navbar navbar-expand-lg " id="Nav">
-    <div class="container-fluid">
-      <a class="navbar-brand" id="Link" href="../Pages/Index.html"><img src="../Assets/logo1.png" alt=""
-          id="imgLogo"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav" id="NavLink">
-          <a class="nav-link active" id="Link" aria-current="page" href="Index.html">Home</a>
-          <a class="nav-link active" id="Link" href="Servico.html">Serviços</a>
-          <a class="nav-link active" id="Link" href="./Index.html#faleconosco">Fale Conosco</a>
+  <body class="body">
+    <nav class="navbar">
+      <a href="Index.html">
+        <img class="logo" src="../Assets/logo1.png" />
+      </a>
+
+      <div class="nav-options-container">
+        <ul id="nav-options" class="navbar-options">
+          <li><a href="Index.html">Home</a></li>
+          <li><a href="Servico.html">Serviços</a></li>
+          <li><a href="#faleconosco">Fale Conosco</a></li>
+        </ul>
+        <a href="Login.html">
+          <i style="font-size: 1.3rem" class="mdi mdi-account"></i>
+        </a>
+        <a id="logout" href="Login.html"></a>
+      </div>
+    </nav>
+    <div id="div-sucess" class="alert alert-success hidden" role="alert"></div>
+    <div id="div-error" class="alert alert-danger hidden" role="alert"></div>
+    <div class="container">
+      <div class="row d-flex justify-content-center pt-5">
+        <div class="form-card col-12 col-lg-6">
+          <form class="needs-validation">
+            <div>
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                name="email"
+                id="email"
+                placeholder="Digite seu e-mail"
+                required
+              />
+              <br />
+              <label for="senha" class="form-label">Senha</label>
+              <input
+                type="password"
+                class="form-control"
+                name="senha"
+                id="senha"
+                placeholder="Digite sua senha"
+                maxlength="11"
+                required
+              />
+              <br />
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <a href="../Pages/Cadastro.html">Faça o Cadastro</a>
+                <button
+                  onclick="fazerRequisicao()"
+                  class="btn btn-outline-dark"
+                  id="btn2"
+                >
+                  Login
+                </button>
+              </div>
+            </div>
+
+            <div class="col-12"></div>
+          </form>
         </div>
-        <a class="navbar-brand" id="Link" href="../Pages/Login.html"><img src="../Assets/login.png" alt=""
-            id="imgLogin"></a>
       </div>
     </div>
-  </nav>
-  <div id="div-sucess" class="alert alert-success hidden" role="alert">
-    A simple success alert—check it out!
-  </div>
-  <div id="div-error" class="alert alert-danger hidden" role="alert">
-    A simple danger alert—check it out!
-  </div>
-  <br>
-  <br>
-  <form class="row g-3 needs-validation" id="Form">
-    <div class="col-md-6" id="label">
-      <label for="email" class="form-label">Email</label>
-      <input type="text" class="form-control" name="email" id="email" placeholder="Digite seu e-mail" required>
-      <br>
-      <label for="senha" class="form-label">Senha</label>
-      <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite sua senha" maxlength="11"
-        required>
-      <br>
-      <a href="../Pages/Cadastro.html">Faça o Cadastro</a>
-    </div>
 
-    <div class="col-12">
-      <button onclick="fazerRequisicao()" class="btn btn-outline-dark" id="btn2">Login</button>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"></script>
-</body>
-
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

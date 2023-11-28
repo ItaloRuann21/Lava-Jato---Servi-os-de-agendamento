@@ -2,7 +2,7 @@
 
 .body {
   background-image: url(../Assets/ServiceBanner.png);
-  background-size: 1366px 615px;
+  background-size: cover;
 }
 #Nav {
   background-color: #000000;
